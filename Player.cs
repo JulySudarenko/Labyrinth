@@ -7,8 +7,11 @@ namespace Labyrinth
     {
         #region Field
 
+        public bool IsAlternativeControl = false;
         public float Speed = 3.0f;
+        public float MouseSpeed = 20.0f;
         private Rigidbody _rigidbody;
+
 
         #endregion
 
@@ -18,6 +21,7 @@ namespace Labyrinth
         private void Start()
         {
             _rigidbody = GetComponent<Rigidbody>();
+            Cursor.visible = false;
         }
 
         #endregion
@@ -27,12 +31,27 @@ namespace Labyrinth
 
         protected void Move()
         {
-            float moveHorizontal = Input.GetAxis("Horizontal");
-            float moveVertical = Input.GetAxis("Vertical");
+
+            float moveHorizontal;
+            float moveVertical;
+            float localSpeed;
+
+            if (IsAlternativeControl)
+            {
+                moveHorizontal = Input.GetAxis("Mouse X");
+                moveVertical = Input.GetAxis("Mouse Y");
+                localSpeed = MouseSpeed;
+            }
+            else
+            {
+                moveHorizontal = Input.GetAxis("Horizontal");
+                moveVertical = Input.GetAxis("Vertical");
+                localSpeed = Speed;
+            }
 
             Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
-            _rigidbody.AddForce(movement * Speed);
+            _rigidbody.AddForce(movement * localSpeed);
         }
 
         #endregion
