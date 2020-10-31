@@ -28,21 +28,6 @@ namespace Labyrinth
             }
         }
 
-        public void Dispose()
-        {
-            foreach (var o in _interactiveObjects)
-            {
-                Destroy(o.gameObject);
-            }
-        }
-
-
-        private void InteractiveObjectOnOnDestroyChange(InteractiveObject value)
-        {
-            value.OnDestroyChange -= InteractiveObjectOnOnDestroyChange;
-            _interactiveObjects.Remove(value);
-        }
-
         private void Update()
         {
             for (var i = 0; i < _interactiveObjects.Count; i++)
@@ -68,8 +53,26 @@ namespace Labyrinth
                 }
             }
         }
+
+        #endregion
+
+
+        #region Methods
+
+        public void Dispose()
+        {
+            foreach (var o in _interactiveObjects)
+            {
+                Destroy(o.gameObject);
+            }
+        }
+
+        private void InteractiveObjectOnOnDestroyChange(InteractiveObject value)
+        {
+            value.OnDestroyChange -= InteractiveObjectOnOnDestroyChange;
+            _interactiveObjects.Remove(value);
+        }
+
         #endregion
     }
-
-
 }

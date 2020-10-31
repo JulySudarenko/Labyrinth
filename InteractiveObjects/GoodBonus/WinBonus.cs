@@ -43,11 +43,6 @@ namespace Labyrinth
                 Mathf.PingPong(Time.time, 1.0f));
         }
 
-        protected override void BackInteraction()
-        {
-            Debug.Log($"Poins {Point}");
-        }
-
         public bool Equals(WinBonus other)
         {
             return Point == other.Point;
