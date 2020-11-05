@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using static UnityEngine.Random;
 
 
 namespace Labyrinth
@@ -9,6 +11,8 @@ namespace Labyrinth
 
         public int Point = 5;
         private float _lengthFlay;
+        public event Action<int> OnPointChange = delegate(int i) {  }; 
+        private Material _material;
 
         #endregion
 
@@ -17,7 +21,8 @@ namespace Labyrinth
 
         private void Awake()
         {
-            _lengthFlay = Random.Range(1.0f, 5.0f);
+            _material = GetComponent<Renderer>().material;
+            _lengthFlay = Range(1.0f, 5.0f);
         }
 
         #endregion
@@ -27,7 +32,14 @@ namespace Labyrinth
 
         protected override void Interaction()
         {
-            _view.Display(Point);
+            OnPointChange.Invoke(Point);
+        }
+
+        public override void Execute()
+        {
+            if(!IsInteractable){return;}
+            Flay();
+            Flicker();
         }
 
         public void Flay()
@@ -43,15 +55,10 @@ namespace Labyrinth
                 Mathf.PingPong(Time.time, 1.0f));
         }
 
-        protected override void BackInteraction()
-        {
-            Debug.Log($"Poins {Point}");
-        }
-
-        public bool Equals(WinBonus other)
-        {
-            return Point == other.Point;
-        }
+        // public bool Equals(WinBonus other)
+        // {
+        //     return Point == other.Point;
+        // }
 
         #endregion
     }

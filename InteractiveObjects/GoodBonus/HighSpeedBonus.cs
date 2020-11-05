@@ -1,31 +1,40 @@
-﻿using static UnityEngine.Debug;
+﻿using UnityEngine;
+using static UnityEngine.Time;
+using static UnityEngine.Random;
 
 
 namespace Labyrinth
 {
-    public sealed class HighSpeedBonus : InteractiveObject
+    public sealed class HighSpeedBonus : InteractiveObject, IRotation
     {
         #region Field
-
-        private float _highSpeed = 2.0f;
+        
+        private float _speedRotation;
 
         #endregion
 
-
+        private void Awake()
+        {
+            _speedRotation = Range(10.0f, 50.0f);
+        }
         #region Methods
 
         protected override void Interaction()
         {
-            _player.Speed = _player.Speed * _highSpeed;
-            Log($"Speed {_player.Speed}");
+            //_player._speedActions["SpeedUp"]?.Invoke();
+            Debug.Log("SpeedUp");
         }
 
-        protected override void BackInteraction()
+        public override void Execute()
         {
-            Log($"Speed {_player.Speed}");
-            //_player.Speed = _player.Speed / _highSpeed;
+            if(!IsInteractable){return;}
+            Rotation();
         }
-
+        
+        public void Rotation()
+        {
+            transform.Rotate(Vector3.up * (deltaTime * _speedRotation), Space.World);
+        }
         #endregion
     }
 }

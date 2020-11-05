@@ -3,7 +3,6 @@ using UnityEngine;
 using static UnityEngine.Time;
 using static UnityEngine.Mathf;
 using static UnityEngine.Random;
-using static UnityEngine.Debug;
 
 
 namespace Labyrinth
@@ -14,7 +13,6 @@ namespace Labyrinth
 
         private float _lengthFlay;
         private float _speedRotation;
-        private float _lowSpeed = 2.0f;
 
         #endregion
 
@@ -32,18 +30,17 @@ namespace Labyrinth
 
         #region Methods
 
-        protected override void BackInteraction()
-        {
-
-            Log($"Speed {_player.Speed}");
-            //_player.Speed = _player.Speed * _lowSpeed;
-            Clone();
-        }
-
         protected override void Interaction()
         {
-            _player.Speed = _player.Speed / _lowSpeed;
-            Log($"Speed {_player.Speed}");
+            //_player._speedActions["SpeedDown"]?.Invoke();
+            Debug.Log("SpeedDown");
+        }
+
+        public override void Execute()
+        {
+            if(!IsInteractable){return;}
+            Flay();
+            Rotation();
         }
 
         public void Flay()
