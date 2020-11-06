@@ -32,8 +32,7 @@ namespace Labyrinth
 
         protected override void Interaction()
         {
-            //_player._speedActions["SpeedDown"]?.Invoke();
-            Debug.Log("SpeedDown");
+            _player._speedActions["SpeedDown"]?.Invoke();
         }
 
         public override void Execute()

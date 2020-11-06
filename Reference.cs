@@ -10,6 +10,8 @@ namespace Labyrinth
         private Camera _mainCamera;
         private GameObject _bonus;
         private GameObject _endGame;
+        private GameObject _winGame;
+        private GameObject _speedDisplay;
         private Button _restartButton;
         private Canvas _canvas;
 
@@ -24,7 +26,20 @@ namespace Labyrinth
                 return _canvas;
             }
         }
-        
+
+        public GameObject WinGame
+        {
+            get
+            {
+                if (_winGame == null)
+                {
+                    var gameObject = Resources.Load<GameObject>("UI/WinGame");
+                    _winGame = Object.Instantiate(gameObject, Canvas.transform);
+                }
+                return _winGame;
+            }
+        }
+
         public GameObject Bonus
         {
             get
@@ -34,11 +49,36 @@ namespace Labyrinth
                     var gameObject = Resources.Load<GameObject>("UI/Bonus");
                     _bonus = Object.Instantiate(gameObject, Canvas.transform);
                 }
-            
                 return _bonus;
             }
         }
+        
+        public GameObject SpeedDisplay
+        {
+            get
+            {
+                if (_speedDisplay == null)
+                {
+                    var gameObject = Resources.Load<GameObject>("UI/SpeedDisplay");
+                    _speedDisplay = Object.Instantiate(gameObject, Canvas.transform);
+                }
+                return _speedDisplay;
+            }
+        }
 
+        public GameObject EndGame
+        {
+            get
+            {
+                if (_endGame == null)
+                {
+                    var gameObject = Resources.Load<GameObject>("UI/EndGame");
+                    _endGame = Object.Instantiate(gameObject, Canvas.transform);
+                }
+                return _endGame;
+            }
+        }
+        
         public Button RestartButton
         {
             get
@@ -51,20 +91,6 @@ namespace Labyrinth
                 return _restartButton;
             } 
         }
-
-        public GameObject EndGame
-        {
-            get
-            {
-                if (_endGame == null)
-                {
-                    var gameObject = Resources.Load<GameObject>("UI/EndGame");
-                    _endGame = Object.Instantiate(gameObject, Canvas.transform);
-                }
-            
-                return _endGame;
-            }
-        }
         
         public PlayerBall PlayerBall
         {
@@ -75,7 +101,6 @@ namespace Labyrinth
                     var gameObject = Resources.Load<PlayerBall>("Player");
                     _playerBall = Object.Instantiate(gameObject);
                 }
-                
                 return _playerBall;
             }
         }

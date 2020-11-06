@@ -17,9 +17,7 @@ namespace Labyrinth
 
         public void GameOver(string name, Color color)
         {
-            Debug.Log($"Вы проиграли. Вас убил {name} {color} цвета");
             _finishGameLabel.text = $"Вы проиграли. Вас убил {name} {color} цвета";
-
         }
     }
 }

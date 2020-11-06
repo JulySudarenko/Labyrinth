@@ -25,8 +25,6 @@ namespace Labyrinth
 
         public int Count => _interactiveObjects.Length;
 
-        //...
-
         public bool MoveNext()
         {
             if (_index == _interactiveObjects.Length - 1)

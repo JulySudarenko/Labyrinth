@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -16,11 +14,14 @@ namespace Labyrinth
         private ListExecuteObject _interactiveObject;
         private DisplayEndGame _displayEndGame;
         private DisplayBonuses _displayBonuses;
+        private DisplayWinGame _displayWinGame;
+        private DisplaySpeed _displaySpeed;
         private Button _restartButton;
         private CameraController _cameraController;
         private InputController _inputController;
         private Reference _reference;
         private int _countBonuses;
+        private int _winBonusRemained;
 
         #endregion
 
@@ -47,6 +48,8 @@ namespace Labyrinth
             
             _displayBonuses = new DisplayBonuses(reference.Bonus);
             _displayEndGame = new DisplayEndGame(reference.EndGame);
+            _displayWinGame = new DisplayWinGame(reference.WinGame);
+            _displaySpeed = new DisplaySpeed(reference.SpeedDisplay);
             _restartButton = reference.RestartButton;
             
             if (Application.platform == RuntimePlatform.WindowsEditor)
@@ -63,29 +66,18 @@ namespace Labyrinth
                     holeBonus.OnCaughtPlayerChange += _displayEndGame.GameOver;
                 }
                 
-                if (o is WinBonus goodBonus)
+                if (o is WinBonus winBonus)
                 {
-                    goodBonus.OnPointChange += AddBonus;
-                }
-
-                if (o is HighSpeedBonus highSpeedBonus)
-                {
-                    //player._speedActions["SpeedUp"]?.Invoke();
-                }
-                
-                if (o is BadSpeedBonus badSpeedBonus)
-                {
-                    //player._speedActions["SpeedDown"]?.Invoke();
+                    winBonus.OnPointChange += AddBonus;
+                    _winBonusRemained++;
                 }
             }
-            
             _restartButton.onClick.AddListener(RestartGame);
             _restartButton.gameObject.SetActive(false);
         }
 
         private void Update()
         {
-           
             for (var i = 0; i < _interactiveObject.Length; i++)
             {
                 var interactiveObject = _interactiveObject[i];
@@ -102,6 +94,7 @@ namespace Labyrinth
 
 
         #region Methods
+        
         private void CaughtPlayer(string value, Color args)
         {
             _restartButton.gameObject.SetActive(true);
@@ -112,23 +105,13 @@ namespace Labyrinth
         {
             _countBonuses += value;
             _displayBonuses.Display(_countBonuses);
+            _winBonusRemained--;
+            if (_winBonusRemained == 0)
+            {
+                Victory();
+                _restartButton.gameObject.SetActive(true);
+            }
         }
-        
-        // public void Dispose()
-        // {
-        //     foreach (var o in _interactiveObject)
-        //     {
-        //         if (o is InteractiveObject interactiveObject)
-        //         {
-        //             if (o is HoleBonus holeBonus)
-        //             {
-        //                 holeBonus.CaughtPlayer -= CaughtPlayer;
-        //                 holeBonus.CaughtPlayer -= _displayEndGame.GameOver;
-        //             }
-        //             Destroy(interactiveObject.gameObject);
-        //         }
-        //     }
-        // }
 
         private void RestartGame()
         {
@@ -136,29 +119,33 @@ namespace Labyrinth
             Time.timeScale = 1.0f;
         }
 
+        private void Victory()
+        {
+            _displayWinGame.WinGame();
+            Time.timeScale = 0.0f;
+        }
+
+        private void ShowNewSpeed(float newSpeed)
+        {
+            _displaySpeed.ShowSpeed(newSpeed);
+        }
+
         public void Dispose()
         {
             foreach (var o in _interactiveObject)
             {
-                if (o is HoleBonus badBonus)
+                if (o is HoleBonus holeBonus)
                 {
-                    badBonus.OnCaughtPlayerChange -= CaughtPlayer;
-                    badBonus.OnCaughtPlayerChange -= _displayEndGame.GameOver;
+                    holeBonus.OnCaughtPlayerChange -= CaughtPlayer;
+                    holeBonus.OnCaughtPlayerChange -= _displayEndGame.GameOver;
                 }
             
-                if (o is WinBonus goodBonus)
+                if (o is WinBonus winBonus)
                 {
-                    goodBonus.OnPointChange -= AddBonus;
+                    winBonus.OnPointChange -= AddBonus;
                 }
             }
         }
-
-        //
-        // private void InteractiveObjectOnOnDestroyChange(InteractiveObject value)
-        // {
-        //     value.OnDestroyChange -= InteractiveObjectOnOnDestroyChange;
-        //     _interactiveObjects.Remove(value);
-        // }
         
         #endregion
     }

@@ -1,6 +1,6 @@
 ﻿namespace Labyrinth
 {
-    public class DisplayWinner
+    public class BonusReference
     {
         
     }
