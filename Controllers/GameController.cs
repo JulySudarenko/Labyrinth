@@ -50,6 +50,9 @@ namespace Labyrinth
             _displayEndGame = new DisplayEndGame(reference.EndGame);
             _displayWinGame = new DisplayWinGame(reference.WinGame);
             _displaySpeed = new DisplaySpeed(reference.SpeedDisplay);
+            
+            player.ShowSpeedAction += ShowNewSpeed;
+            
             _restartButton = reference.RestartButton;
             
             if (Application.platform == RuntimePlatform.WindowsEditor)
@@ -74,6 +77,7 @@ namespace Labyrinth
             }
             _restartButton.onClick.AddListener(RestartGame);
             _restartButton.gameObject.SetActive(false);
+            ShowNewSpeed(player.Speed);
         }
 
         private void Update()

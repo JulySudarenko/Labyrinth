@@ -10,8 +10,8 @@ namespace Labyrinth
     {
         #region Field
 
-        public Dictionary<string, Action> _speedActions;
-        //public event Action<float> _showSpeed;
+        public Dictionary<string, Action> SpeedBonusActions;
+        public event Action<float> ShowSpeedAction;
 
         public float Speed = 3.0f;
         public abstract void Move(float x, float y, float z);
@@ -28,7 +28,7 @@ namespace Labyrinth
         private void Awake()
         {
             _baseSpeed = Speed;
-            _speedActions = new Dictionary<string, Action>
+            SpeedBonusActions = new Dictionary<string, Action>
             {
                 ["SpeedUp"] = SpeedUp,
                 ["SpeedDown"] = SpeedDown,
@@ -49,6 +49,7 @@ namespace Labyrinth
         public void SpeedDown()
         {
             Speed /= _speedChanger;
+            ShowSpeedAction?.Invoke(Speed);
             PrintSpeed();
             SpeedBase();
         }
@@ -56,6 +57,7 @@ namespace Labyrinth
         public void SpeedUp()
         {
             Speed *= _speedChanger;
+            ShowSpeedAction?.Invoke(Speed);
             PrintSpeed();
             SpeedBase();
         }
@@ -63,6 +65,7 @@ namespace Labyrinth
         private void ReturnBaseSpeed()
         {
             Speed = _baseSpeed;
+            ShowSpeedAction?.Invoke(Speed);
             PrintSpeed();
         }
 
