@@ -21,6 +21,7 @@ namespace Labyrinth
         private InputController _inputController;
         private Reference _reference;
         private HoleBonus _holeBonus;
+        private PlayerBase _player;
         private int _countBonuses;
         private int _winBonusRemained;
 
@@ -36,19 +37,19 @@ namespace Labyrinth
             var reference = new Reference();
             var bonusReference = new BonusReference();
             
-            PlayerBase player = null;
+            _player = null;
             if (PlayerType == PlayerType.Ball)
             {
-                player = reference.PlayerBall;
+                _player = reference.PlayerBall;
             }
-
+            
             _holeBonus = bonusReference.HoleBonus;
             _interactiveObject.AddExecuteObject(_holeBonus);
             
-            _cameraController = new CameraController(player.transform, reference.MainCamera.transform);
+            _cameraController = new CameraController(_player.transform, reference.MainCamera.transform);
             _interactiveObject.AddExecuteObject(_cameraController);
             
-            _inputController = new InputController(player);
+            _inputController = new InputController(_player);
             _interactiveObject.AddExecuteObject(_inputController);
             
             _displayBonuses = new DisplayBonuses(reference.Bonus);
@@ -56,13 +57,13 @@ namespace Labyrinth
             _displayWinGame = new DisplayWinGame(reference.WinGame);
             _displaySpeed = new DisplaySpeed(reference.SpeedDisplay);
             
-            player.ShowSpeedAction += ShowNewSpeed;
+            _player.ShowSpeedAction += ShowNewSpeed;
             
             _restartButton = reference.RestartButton;
             
             if (Application.platform == RuntimePlatform.WindowsEditor)
             {
-                _inputController = new InputController(player);
+                _inputController = new InputController(_player);
                 _interactiveObject.AddExecuteObject(_inputController);
             }
             
@@ -82,7 +83,7 @@ namespace Labyrinth
             }
             _restartButton.onClick.AddListener(RestartGame);
             _restartButton.gameObject.SetActive(false);
-            ShowNewSpeed(player.Speed);
+            ShowNewSpeed(_player.Speed);
         }
 
         private void Update()
@@ -124,12 +125,14 @@ namespace Labyrinth
 
         private void RestartGame()
         {
+            Dispose();
             SceneManager.LoadScene(sceneBuildIndex: 0); 
             Time.timeScale = 1.0f;
         }
 
         private void Victory()
         {
+            Dispose();
             _displayWinGame.WinGame();
             Time.timeScale = 0.0f;
         }
@@ -154,6 +157,7 @@ namespace Labyrinth
                     winBonus.OnPointChange -= AddBonus;
                 }
             }
+            _player.ShowSpeedAction -= ShowNewSpeed;
         }
         
         #endregion
