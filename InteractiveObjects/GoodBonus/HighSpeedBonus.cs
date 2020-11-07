@@ -17,6 +17,7 @@ namespace Labyrinth
         {
             _speedRotation = Range(10.0f, 50.0f);
         }
+        
         #region Methods
 
         protected override void Interaction()

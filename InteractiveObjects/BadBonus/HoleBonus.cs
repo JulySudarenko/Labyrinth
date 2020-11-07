@@ -8,12 +8,6 @@ namespace Labyrinth
     {
         #region Fields
         public event Action<string, Color> OnCaughtPlayerChange = delegate(string str, Color color) {  };
-        // private event EventHandler<CaughtPlayerEventArgs> _caughtPlayer;
-        // public event EventHandler<CaughtPlayerEventArgs> CaughtPlayer
-        // {
-        //     add { _caughtPlayer += value; }
-        //     remove { _caughtPlayer -= value; }
-        // }
 
         #endregion
           
@@ -22,9 +16,6 @@ namespace Labyrinth
 
         protected override void Interaction()
         {
-            //_isHole = true;
-            // _player.GetComponent<Collider>().enabled = false;
-            // _caughtPlayer?.Invoke(this, new CaughtPlayerEventArgs(_color));
             OnCaughtPlayerChange.Invoke(gameObject.name, _color);
         }
 
@@ -32,6 +23,7 @@ namespace Labyrinth
         {
             if(!IsInteractable){return;}
         }
+        
         #endregion
     }
 }

@@ -50,7 +50,6 @@ namespace Labyrinth
         {
             Speed /= _speedChanger;
             ShowSpeedAction?.Invoke(Speed);
-            PrintSpeed();
             SpeedBase();
         }
 
@@ -58,7 +57,6 @@ namespace Labyrinth
         {
             Speed *= _speedChanger;
             ShowSpeedAction?.Invoke(Speed);
-            PrintSpeed();
             SpeedBase();
         }
 
@@ -66,7 +64,6 @@ namespace Labyrinth
         {
             Speed = _baseSpeed;
             ShowSpeedAction?.Invoke(Speed);
-            PrintSpeed();
         }
 
         public void Dead()
@@ -79,11 +76,6 @@ namespace Labyrinth
             yield return new WaitForSeconds(_interval);
 
             ReturnBaseSpeed();
-        }
-
-        private void PrintSpeed()
-        {
-            Debug.Log($"Speed = {Speed}");
         }
 
         #endregion

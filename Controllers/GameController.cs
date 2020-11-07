@@ -20,6 +20,7 @@ namespace Labyrinth
         private CameraController _cameraController;
         private InputController _inputController;
         private Reference _reference;
+        private HoleBonus _holeBonus;
         private int _countBonuses;
         private int _winBonusRemained;
 
@@ -33,12 +34,16 @@ namespace Labyrinth
             _interactiveObject = new ListExecuteObject();
             
             var reference = new Reference();
+            var bonusReference = new BonusReference();
             
             PlayerBase player = null;
             if (PlayerType == PlayerType.Ball)
             {
                 player = reference.PlayerBall;
             }
+
+            _holeBonus = bonusReference.HoleBonus;
+            _interactiveObject.AddExecuteObject(_holeBonus);
             
             _cameraController = new CameraController(player.transform, reference.MainCamera.transform);
             _interactiveObject.AddExecuteObject(_cameraController);

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace Labyrinth
 {
-    public class Reference
+    public sealed class Reference
     {
         private PlayerBall _playerBall;
         private Camera _mainCamera;

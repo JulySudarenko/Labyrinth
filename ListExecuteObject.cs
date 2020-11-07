@@ -7,6 +7,8 @@ namespace Labyrinth
 {
     public sealed class ListExecuteObject : IEnumerator, IEnumerable
     {
+        #region Fields
+
         private IExecute[] _interactiveObjects;
         private int _index = -1;
         private InteractiveObject _current;
@@ -22,6 +24,10 @@ namespace Labyrinth
                 }
             }
         }
+
+        #endregion
+
+        #region Methods
 
         public void AddExecuteObject(IExecute execute)
         {
@@ -68,5 +74,7 @@ namespace Labyrinth
         {
             return GetEnumerator();
         }
+
+        #endregion
     }
 }
