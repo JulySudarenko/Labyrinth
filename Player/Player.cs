@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 
 namespace Labyrinth
@@ -7,11 +10,17 @@ namespace Labyrinth
     {
         #region Field
 
+        public Dictionary<string, Action> _speedActions;
+
         public float Speed = 3.0f;
+
         protected Rigidbody _rigidbody;
         protected Vector3 _movement;
         protected float _moveHorizontal;
         protected float _moveVertical;
+        private float _speedChanger = 2.0f;
+        private float _baseSpeed;
+        private int _interval = 10;
 
         #endregion
 
@@ -22,6 +31,14 @@ namespace Labyrinth
         {
             _rigidbody = GetComponent<Rigidbody>();
             Cursor.visible = false;
+            _baseSpeed = Speed;
+
+            _speedActions = new Dictionary<string, Action>
+            {
+                ["SpeedUp"] = SpeedUp,
+                ["SpeedDown"] = SpeedDown,
+                ["SpeedBase"] = SpeedBase,
+            };
         }
 
         #endregion
@@ -38,9 +55,46 @@ namespace Labyrinth
             _rigidbody.AddForce(_movement * Speed);
         }
 
+        private void SpeedBase()
+        {
+            StartCoroutine(TimeBonus(_interval));
+        }
+
+        private void SpeedDown()
+        {
+            Speed /= _speedChanger;
+            PrintSpeed();
+            SpeedBase();
+        }
+
+        private void SpeedUp()
+        {
+            Speed *= _speedChanger;
+            PrintSpeed();
+            SpeedBase();
+        }
+
+        private void ReturnBaseSpeed()
+        {
+            Speed = _baseSpeed;
+            PrintSpeed();
+        }
+
         public void Dead()
         {
             Destroy(gameObject);
+        }
+
+        IEnumerator TimeBonus(int _interval)
+        {
+            yield return new WaitForSeconds(_interval);
+
+            ReturnBaseSpeed();
+        }
+
+        private void PrintSpeed()
+        {
+            Debug.Log($"Speed = {Speed}");
         }
 
         #endregion

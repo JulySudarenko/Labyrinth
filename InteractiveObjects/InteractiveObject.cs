@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,11 +10,13 @@ namespace Labyrinth
         #region Field
 
         public event Action<InteractiveObject> OnDestroyChange;
+        public delegate void BonusInteraction(object value);
+        public event BonusInteraction BonusTaken;
+
         public bool IsInteractable { get; } = true;
         protected IView _view;
         protected Player _player;
         protected Material _material;
-        //protected float _bonusInterval = 10;
         protected float _startSpeed;
         protected int _interval = 10;
         protected int _deadInterval = 1;
@@ -29,7 +30,6 @@ namespace Labyrinth
         private void Start()
         {
             ((IAction)this).Action();
-            //((IInitialization)this).Action();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -44,10 +44,7 @@ namespace Labyrinth
             {
                 OnDestroyChange?.Invoke(this);
                 Destroy(gameObject);
-                StartCoroutine(TimeBonus(_interval));
             }
-            else
-                StartCoroutine(TimeBonus(_deadInterval));
         }
 
         #endregion
@@ -56,7 +53,6 @@ namespace Labyrinth
         #region Methods
 
         protected abstract void Interaction();
-        protected abstract void BackInteraction();
 
         void IAction.Action()
         {
@@ -80,18 +76,6 @@ namespace Labyrinth
         public int CompareTo(InteractiveObject other)
         {
             return name.CompareTo(other.name);
-        }
-
-        IEnumerator TimeBonus(int _interval)
-        {
-            yield return new WaitForSeconds(_interval);
-
-            //if(!_isHole)
-            //{
-                
-            //}
-            //Debug.Log("Game over");
-            BackInteraction();
         }
 
         #endregion
