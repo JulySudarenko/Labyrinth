@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 using UnityEngine;
 
 
@@ -6,14 +7,15 @@ namespace Labyrinth
 {
     [Serializable]
     public sealed class SavedData
-    {        
+    {
         public string Name;
         public Vector3Serializable Position;
+        //public float Speed;
         public bool IsEnabled;
 
-        public override string ToString() => $"Name {Name} Position {Position} IsVisible {IsEnabled}";
+        public override string ToString() => $"Name {Name} Position {Position} IsVisible {IsEnabled}";// Speed {Speed}";
     }
-    
+
     [Serializable]
     public struct Vector3Serializable
     {
@@ -32,12 +34,12 @@ namespace Labyrinth
         {
             return new Vector3(value.X, value.Y, value.Z);
         }
-		
+
         public static implicit operator Vector3Serializable(Vector3 value)
         {
             return new Vector3Serializable(value.x, value.y, value.z);
         }
-        
+
         public override string ToString() => $" (X = {X} Y = {Y} Z = {Z})";
     }
 }

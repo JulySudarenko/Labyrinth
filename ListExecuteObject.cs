@@ -75,6 +75,18 @@ namespace Labyrinth
             return GetEnumerator();
         }
 
+        public override string ToString()
+        {
+            string result = null;
+        
+            for (int i = 0; i < _interactiveObjects.Length; i++)
+            {
+                result += $"{_interactiveObjects[i].GetType()} {_interactiveObjects[i]}";
+            }
+        
+            return result;
+        }
+
         #endregion
     }
 }

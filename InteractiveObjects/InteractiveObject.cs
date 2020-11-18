@@ -12,7 +12,8 @@ namespace Labyrinth
         protected Color _color;
 
         private bool _isInteractable;
-
+        public string Test = "test";
+        
         protected bool IsInteractable
         {
             get { return _isInteractable; }

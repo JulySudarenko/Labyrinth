@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -49,7 +50,7 @@ namespace Labyrinth
             _cameraController = new CameraController(_player.transform, reference.MainCamera.transform);
             _interactiveObject.AddExecuteObject(_cameraController);
             
-            _inputController = new InputController(_player);
+            _inputController = new InputController(_player, _interactiveObject);
             _interactiveObject.AddExecuteObject(_inputController);
             
             _displayBonuses = new DisplayBonuses(reference.Bonus);
@@ -63,7 +64,7 @@ namespace Labyrinth
             
             if (Application.platform == RuntimePlatform.WindowsEditor)
             {
-                _inputController = new InputController(_player);
+                _inputController = new InputController(_player, _interactiveObject);
                 _interactiveObject.AddExecuteObject(_inputController);
             }
             
@@ -91,7 +92,6 @@ namespace Labyrinth
             for (var i = 0; i < _interactiveObject.Length; i++)
             {
                 var interactiveObject = _interactiveObject[i];
-
                 if (interactiveObject == null)
                 {
                     continue;
