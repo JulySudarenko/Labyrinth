@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using System.Collections.Generic;
 
 
 namespace Labyrinth
@@ -10,22 +9,29 @@ namespace Labyrinth
     {
         public void Save(List<T> data, string path = null)
         {
-            string str = null;
-            
+            List<string> str = new List<string>();
             foreach (var d in data)
             {
-                str += JsonUtility.ToJson(d);
+                JsonUtility.ToJson(d).AddTo(str);
             }
 
-            //File.WriteAllText(path, Crypto.CryptoXOR(str));
-            File.WriteAllText(path, str);
+            File.WriteAllLines(path, str);
         }
 
         public List<T> Load(string path = null)
         {
-            var str = File.ReadAllText(path); 
-            // return JsonUtility.FromJson<T>(Crypto.CryptoXOR(str));
-            return JsonUtility.FromJson<List<T>>(str);
+            var loadSaveList = new List<T>();
+
+            using (var file = File.OpenText(path))
+            {
+                while (!file.EndOfStream)
+                {
+                    var line = file.ReadLine();
+                    JsonUtility.FromJson<T>(line).AddTo(loadSaveList);
+                }
+            }
+
+            return loadSaveList;
         }
     }
 }

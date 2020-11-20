@@ -9,7 +9,6 @@ namespace Labyrinth
     public sealed class SaveDataRepository
     {
         private readonly IData<SavedData> _data;
-        //private readonly List<SavedData> _dataList;
 
         private const string _folderName = "dataSave";
         private const string _fileName = "data.bat";
@@ -54,7 +53,6 @@ namespace Labyrinth
             {
                 if (i is InteractiveObject bonus)
                 {
-                    Debug.Log("Save InteractiveObject");
             
                     var saveBonus = new SavedData
                     {
@@ -67,11 +65,6 @@ namespace Labyrinth
                 }
             }
 
-            foreach (var o in saveList)
-            {
-                Debug.Log($"{o}");
-            }
-
             _data.Save(saveList, Path.Combine(_path, _fileName));
         }
 
@@ -82,38 +75,32 @@ namespace Labyrinth
             {
                 throw new ArgumentException("File not found");
             }
-
-            var loadGame = _data.Load(file);
-            Debug.Log(loadGame.Count);
+            var loadGame = new List<SavedData>();
+            loadGame = _data.Load(file);
+ 
             foreach (var str in loadGame)
             {
-                Debug.Log(str);
                 if (str.Name == player.name)
                 {
-                    //player.name = str.Name;
                     player.transform.position = str.Position;
                     //player.Speed = str.Speed;
                     player.gameObject.SetActive(str.IsEnabled);
                 }
 
-                // foreach (var obj in interactiveObject)
-                // {
-                //     if (obj is InteractiveObject bonus)
-                //     {
-                //         if (str.Name == bonus.name)
-                //         {
-                //             //bonus.name = str.Name;
-                //             bonus.transform.position = str.Position;
-                //             bonus.gameObject.SetActive(str.IsEnabled);
-                //         }
-                //     }
-                //
-                //     Debug.Log(str);
-                //     Debug.Log(obj);
-                // }
+                foreach (var obj in interactiveObject)
+                {
+                    if (obj is InteractiveObject bonus)
+                    {
+                        if (str.Name == bonus.name)
+                        {
+                            bonus.transform.position = str.Position;
+                            bonus.gameObject.SetActive(str.IsEnabled);
+                        }
+                    }
+                }
             }
 
-            //Debug.Log(loadGame);
+            Debug.Log(loadGame);
         }
     }
 }
