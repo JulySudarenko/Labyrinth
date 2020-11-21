@@ -14,7 +14,7 @@ namespace Labyrinth
         private bool _isInteractable;
         public string Test = "test";
         
-        protected bool IsInteractable
+        public bool IsInteractable
         {
             get { return _isInteractable; }
             private set

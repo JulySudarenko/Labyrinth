@@ -38,8 +38,6 @@ namespace Labyrinth
 
             List<SavedData> saveList = new List<SavedData>();
 
-            Debug.Log("Save Player");
-
             var savePlayer = new SavedData
             {
                 Position = player.transform.position,
@@ -99,8 +97,6 @@ namespace Labyrinth
                     }
                 }
             }
-
-            Debug.Log(loadGame);
         }
     }
 }

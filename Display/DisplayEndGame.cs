@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Labyrinth
 {
-    public sealed class DisplayEndGame
+    public sealed class DisplayEndGame : IView
     {
         private readonly Text _finishGameLabel;
 

@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 namespace Labyrinth
 {
-	public sealed class RadarObj : MonoBehaviour
-	{
-		[SerializeField] private Image _ico;
+    public sealed class RadarObj : MonoBehaviour
+    {
+        [SerializeField] private Image _ico;
 
         private void OnValidate()
         {
@@ -14,13 +14,13 @@ namespace Labyrinth
         }
 
         private void OnDisable()
-		{
-			Radar.RemoveRadarObject(gameObject);
-		}
+        {
+            Radar.RemoveRadarObject(gameObject);
+        }
 
-		private void OnEnable()
-		{
-			Radar.RegisterRadarObject(gameObject, _ico);
-		}
-	}
+        private void OnEnable()
+        {
+            Radar.RegisterRadarObject(gameObject, _ico);
+        }
+    }
 }

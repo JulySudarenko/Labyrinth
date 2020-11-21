@@ -7,11 +7,11 @@ namespace Labyrinth
     public sealed class HoleBonus : InteractiveObject
     {
         #region Fields
-        public event Action<string, Color> OnCaughtPlayerChange = delegate(string str, Color color) {  };
+
+        public event Action<string, Color> OnCaughtPlayerChange = delegate(string str, Color color) { };
 
         #endregion
-          
-        
+
         #region Methods
 
         protected override void Interaction()
@@ -21,9 +21,12 @@ namespace Labyrinth
 
         public override void Execute()
         {
-            if(!IsInteractable){return;}
+            if (!IsInteractable)
+            {
+                return;
+            }
         }
-        
+
         #endregion
     }
 }
