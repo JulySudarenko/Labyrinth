@@ -6,12 +6,12 @@ namespace Labyrinth
     public sealed class InputController : IExecute
     {
         private readonly PlayerBase _playerBase;
-        private readonly ListExecuteObject _interactiveObject;
+        private readonly ListInteractiveObject _interactiveObject;
         private readonly SaveDataRepository _saveDataRepository;
         private readonly KeyCode _savePlayer = KeyCode.C;
         private readonly KeyCode _loadPlayer = KeyCode.V;
 
-        public InputController(PlayerBase player, ListExecuteObject interactiveObject)
+        public InputController(PlayerBase player, ListInteractiveObject interactiveObject)
         {
             _playerBase = player;
 

@@ -4,27 +4,30 @@ using Random = UnityEngine.Random;
 
 namespace Labyrinth
 {
-    public abstract class InteractiveObject : MonoBehaviour, IExecute
+    public abstract class InteractiveObject : MonoBehaviour//, IExecute
     {
         #region Field
 
+        public bool IsFly;
+        
         protected PlayerBase _player;
         protected Color _color;
+        protected Renderer _renderer;
+        protected Collider _collider;
 
         private bool _isInteractable;
-        public string Test = "test";
-        
+
         public bool IsInteractable
         {
             get { return _isInteractable; }
-            private set
+            set
             {
                 _isInteractable = value;
-                GetComponent<Renderer>().enabled = _isInteractable;
-                GetComponent<Collider>().enabled = _isInteractable;
+                _renderer.enabled = _isInteractable;
+                _collider.enabled = _isInteractable;
             }
         }
-        
+
         #endregion
 
 
@@ -32,7 +35,10 @@ namespace Labyrinth
 
         private void Start()
         {
+            _collider = GetComponent<Collider>();
+            _renderer = GetComponent<Renderer>();
             IsInteractable = true;
+
             _color = Random.ColorHSV();
             if (TryGetComponent(out Renderer renderer))
             {
@@ -46,6 +52,7 @@ namespace Labyrinth
             {
                 return;
             }
+
             _player = other.GetComponent<PlayerBase>();
             Interaction();
             IsInteractable = false;
@@ -57,7 +64,7 @@ namespace Labyrinth
         #region Methods
 
         protected abstract void Interaction();
-        public abstract void Execute();
+        //public abstract void Execute();
 
         #endregion
     }

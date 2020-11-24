@@ -35,12 +35,12 @@ namespace Labyrinth
             OnPointChange.Invoke(Point);
         }
 
-        public override void Execute()
-        {
-            if(!IsInteractable){return;}
-            Flay();
-            Flicker();
-        }
+        // public override void Execute()
+        // {
+        //     if(!IsInteractable){return;}
+        //     Flay();
+        //     Flicker();
+        // }
 
         public void Flay()
         {

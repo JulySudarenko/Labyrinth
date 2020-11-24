@@ -25,11 +25,11 @@ namespace Labyrinth
             _player.SpeedBonusActions["SpeedUp"]?.Invoke();
         }
 
-        public override void Execute()
-        {
-            if(!IsInteractable){return;}
-            Rotation();
-        }
+        // public override void Execute()
+        // {
+        //     if(!IsInteractable){return;}
+        //     Rotation();
+        // }
         
         public void Rotation()
         {

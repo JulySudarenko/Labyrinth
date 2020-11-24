@@ -13,17 +13,19 @@ namespace Labyrinth
         private int _index = -1;
         private InteractiveObject _current;
 
-        public ListExecuteObject()
-        {
-            var interactiveObjects = Object.FindObjectsOfType<InteractiveObject>();
-            for (var i = 0; i < interactiveObjects.Length; i++)
-            {
-                if (interactiveObjects[i] is IExecute interactiveObject)
-                {
-                    AddExecuteObject(interactiveObject);
-                }
-            }
-        }
+        public ListExecuteObject() => _interactiveObjects = new IExecute[] { };
+        
+        // public ListExecuteObject()
+        // {
+        //     var interactiveObjects = Object.FindObjectsOfType<InteractiveObject>();
+        //     for (var i = 0; i < interactiveObjects.Length; i++)
+        //     {
+        //         if (interactiveObjects[i] is IExecute interactiveObject)
+        //         {
+        //             AddExecuteObject(interactiveObject);
+        //         }
+        //     }
+        // }
 
         #endregion
 
@@ -73,18 +75,6 @@ namespace Labyrinth
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
-        }
-
-        public override string ToString()
-        {
-            string result = null;
-        
-            for (int i = 0; i < _interactiveObjects.Length; i++)
-            {
-                result += $"{_interactiveObjects[i].GetType()} {_interactiveObjects[i]}";
-            }
-        
-            return result;
         }
 
         #endregion

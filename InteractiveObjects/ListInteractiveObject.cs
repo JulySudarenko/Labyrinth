@@ -5,16 +5,30 @@ using Object = UnityEngine.Object;
 
 namespace Labyrinth
 {
-    public sealed class ListInteractableObject : IEnumerator, IEnumerable
+    public sealed class ListInteractiveObject : IEnumerator, IEnumerable
     {
         private InteractiveObject[] _interactiveObjects;
         private InteractiveObject _current;
         private int _index = -1;
 
-        public ListInteractableObject()
+        public ListInteractiveObject()
         {
             _interactiveObjects = Object.FindObjectsOfType<InteractiveObject>();
-            Array.Sort(_interactiveObjects);
+            // Array.Sort(_interactiveObjects);
+        }
+        
+        public int Count => _interactiveObjects.Length;
+        
+        public void AddInteractiveObject(InteractiveObject interactive)
+        {
+            if (_interactiveObjects == null)
+            {
+                _interactiveObjects = new[] {interactive};
+                return;
+            }
+
+            Array.Resize(ref _interactiveObjects, Count + 1);
+            _interactiveObjects[Count - 1] = interactive;
         }
 
         public InteractiveObject this[int index]
@@ -23,7 +37,6 @@ namespace Labyrinth
             set => _interactiveObjects[index] = value;
         }
 
-        public int Count => _interactiveObjects.Length;
 
         public bool MoveNext()
         {

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using static UnityEngine.Time;
 using static UnityEngine.Mathf;
 using static UnityEngine.Random;
@@ -7,7 +6,7 @@ using static UnityEngine.Random;
 
 namespace Labyrinth
 {
-    public sealed class BadSpeedBonus : InteractiveObject, IFlay, IRotation, ICloneable
+    public sealed class BadSpeedBonus : InteractiveObject//, IFlay, IRotation, ICloneable
     {
         #region Field
 
@@ -35,12 +34,12 @@ namespace Labyrinth
             _player.SpeedBonusActions["SpeedDown"]?.Invoke();
         }
 
-        public override void Execute()
-        {
-            if(!IsInteractable){return;}
-            Flay();
-            Rotation();
-        }
+        // public override void Execute()
+        // {
+        //     if(!IsInteractable){return;}
+        //     Flay();
+        //     Rotation();
+        // }
 
         public void Flay()
         {
@@ -52,12 +51,6 @@ namespace Labyrinth
         public void Rotation()
         {
             transform.Rotate(Vector3.up * (deltaTime * _speedRotation), Space.World);
-        }
-
-        public object Clone()
-        {
-            var result = Instantiate(gameObject, transform.position, transform.rotation, transform.parent);
-            return result;
         }
 
         #endregion
