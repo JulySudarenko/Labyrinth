@@ -12,13 +12,5 @@ namespace Labyrinth
         {
             OnCaughtPlayerChange?.Invoke(gameObject.name, _color);
         }
-
-        // public override void Execute()
-        // {
-        //     if (!IsInteractable)
-        //     {
-        //         return;
-        //     }
-        // }
     }
 }

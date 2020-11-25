@@ -4,12 +4,14 @@ using Random = UnityEngine.Random;
 
 namespace Labyrinth
 {
-    public abstract class InteractiveObject : MonoBehaviour//, IExecute
+    public abstract class InteractiveObject : MonoBehaviour
     {
         #region Field
 
         public bool IsFly;
-        
+
+        [SerializeField] private bool _isAllowScaling;
+        [SerializeField] private float ActiveDis;
         protected PlayerBase _player;
         protected Color _color;
         protected Renderer _renderer;
@@ -64,7 +66,6 @@ namespace Labyrinth
         #region Methods
 
         protected abstract void Interaction();
-        //public abstract void Execute();
 
         #endregion
     }
