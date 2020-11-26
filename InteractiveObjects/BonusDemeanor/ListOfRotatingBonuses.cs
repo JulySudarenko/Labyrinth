@@ -5,9 +5,9 @@ namespace Labyrinth
 {
     public class ListOfRotatingBonuses : IExecute
     {
-        private Rotation[] _rotatingBonuses;
+        private RotationController[] _rotatingBonuses;
 
-        public ListOfRotatingBonuses() => _rotatingBonuses = new Rotation[] { };
+        public ListOfRotatingBonuses() => _rotatingBonuses = new RotationController[] { };
 
         public int Count => _rotatingBonuses.Length;
 
@@ -15,12 +15,12 @@ namespace Labyrinth
         {
             if (_rotatingBonuses == null)
             {
-                _rotatingBonuses = new[] {new Rotation(interactive)};
+                _rotatingBonuses = new[] {new RotationController(interactive)};
                 return;
             }
 
             Array.Resize(ref _rotatingBonuses, Count + 1);
-            _rotatingBonuses[Count - 1] = new Rotation(interactive);
+            _rotatingBonuses[Count - 1] = new RotationController(interactive);
         }
 
         public void Execute()

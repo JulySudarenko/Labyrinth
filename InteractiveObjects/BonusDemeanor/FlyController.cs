@@ -5,12 +5,12 @@ using static UnityEngine.Random;
 
 namespace Labyrinth
 {
-    public class Fly
+    public class FlyController
     {
         private Transform _flyingBonus { get; }
         private readonly float _flyAltitude;
 
-        public Fly(InteractiveObject flyingBonus)
+        public FlyController(InteractiveObject flyingBonus)
         {
             _flyingBonus = flyingBonus.transform;
             _flyAltitude = Range(1.0f, 5.0f);

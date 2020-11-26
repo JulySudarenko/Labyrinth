@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -9,6 +10,7 @@ namespace Labyrinth
         #region Field
 
         public PlayerType PlayerType = PlayerType.Ball;
+        private List<InteractiveObject> _forColorBonus;
         private ListExecuteObject _executeObject;
         private ListInteractiveObject _interactiveObject;
         private InteractiveObjectsInitializer _interactiveObjectsInitializer;
@@ -27,7 +29,7 @@ namespace Labyrinth
             _executeObject = new ListExecuteObject();
             _interactiveObjectsInitializer = new InteractiveObjectsInitializer();
             _interactiveObjectsInitializer.Initialize();
-            
+
             var reference = new Reference();
 
             _player = null;
@@ -41,7 +43,7 @@ namespace Labyrinth
             _executeObject.AddExecuteObject(_interactiveObjectsInitializer.ListOfRotatingBonuses);
 
             _interactiveObject = new ListInteractiveObject();
-            
+
             _cameraController = new CameraController(_player.transform, reference.MainCamera.transform);
             _executeObject.AddExecuteObject(_cameraController);
 
@@ -58,7 +60,7 @@ namespace Labyrinth
                 winBonus.OnPointChange += _viewInitializer.AddBonus;
                 _viewInitializer.WinBonusRemained++;
             }
-            
+
             if (Application.platform == RuntimePlatform.WindowsEditor)
             {
                 _inputController = new InputController(_player, _interactiveObject);

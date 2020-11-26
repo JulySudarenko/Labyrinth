@@ -5,12 +5,12 @@ using static UnityEngine.Time;
 
 namespace Labyrinth
 {
-    public class Rotation
+    public class RotationController
     {
         private Transform _rotatingBonus { get; }
         private readonly float _rotationSpeed;
         
-        public Rotation(InteractiveObject rotatingBonus)
+        public RotationController(InteractiveObject rotatingBonus)
         {
             _rotatingBonus = rotatingBonus.transform;
             _rotationSpeed = Range(1.0f, 5.0f);

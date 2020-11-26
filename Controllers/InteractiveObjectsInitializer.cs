@@ -1,4 +1,7 @@
 ﻿
+using System.Collections.Generic;
+using UnityEngine;
+
 namespace Labyrinth
 {
     public class InteractiveObjectsInitializer

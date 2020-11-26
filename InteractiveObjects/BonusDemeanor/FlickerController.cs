@@ -3,11 +3,11 @@
 
 namespace Labyrinth
 {
-    public class Flicker
+    public class FlickerController
     {
         private Material _flickeringBonus;
         
-        public Flicker(InteractiveObject flickeringBonus)
+        public FlickerController(InteractiveObject flickeringBonus)
         {
             _flickeringBonus = flickeringBonus.GetComponent<Renderer>().material;;
         }

@@ -15,6 +15,7 @@ namespace Labyrinth
         protected Renderer _renderer;
         protected Collider _collider;
 
+        [Header("Gizmos")]
         [SerializeField] private bool _isAllowScaling;
         [SerializeField] private float ActiveDis;
         private bool _isInteractable;

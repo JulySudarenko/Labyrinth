@@ -5,9 +5,9 @@ namespace Labyrinth
 {
     public class ListOfFlickeringBonuses : IExecute
     {
-        private Flicker[] _flickeringBonuses;
+        private FlickerController[] _flickeringBonuses;
 
-        public ListOfFlickeringBonuses() => _flickeringBonuses = new Flicker[] { };
+        public ListOfFlickeringBonuses() => _flickeringBonuses = new FlickerController[] { };
 
         public int Count => _flickeringBonuses.Length;
 
@@ -15,12 +15,12 @@ namespace Labyrinth
         {
             if (_flickeringBonuses == null)
             {
-                _flickeringBonuses = new[] {new Flicker(interactive)};
+                _flickeringBonuses = new[] {new FlickerController(interactive)};
                 return;
             }
 
             Array.Resize(ref _flickeringBonuses, Count + 1);
-            _flickeringBonuses[Count - 1] = new Flicker(interactive);
+            _flickeringBonuses[Count - 1] = new FlickerController(interactive);
         }
 
         public void AddManyFlickeringBonus(InteractiveObject[] interactives)
@@ -29,12 +29,12 @@ namespace Labyrinth
             {
                 if (_flickeringBonuses == null)
                 {
-                    _flickeringBonuses = new[] {new Flicker(interactive)};
+                    _flickeringBonuses = new[] {new FlickerController(interactive)};
                     return;
                 }
                 
                 Array.Resize(ref _flickeringBonuses, Count + 1);
-                _flickeringBonuses[Count - 1] = new Flicker(interactive);
+                _flickeringBonuses[Count - 1] = new FlickerController(interactive);
             }
         }
         
