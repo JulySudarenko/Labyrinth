@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -10,9 +9,9 @@ namespace Labyrinth
         #region Field
 
         public PlayerType PlayerType = PlayerType.Ball;
-        private List<InteractiveObject> _forColorBonus;
         private ListExecuteObject _executeObject;
         private ListInteractiveObject _interactiveObject;
+        private ListOfColoringBonuses _coloringBonuses;
         private InteractiveObjectsInitializer _interactiveObjectsInitializer;
         private ViewInitializer _viewInitializer;
         private CameraController _cameraController;
@@ -41,6 +40,7 @@ namespace Labyrinth
             _executeObject.AddExecuteObject(_interactiveObjectsInitializer.ListOfFlyingBonuses);
             _executeObject.AddExecuteObject(_interactiveObjectsInitializer.ListOfFlickeringBonuses);
             _executeObject.AddExecuteObject(_interactiveObjectsInitializer.ListOfRotatingBonuses);
+            //_executeObject.AddExecuteObject(_interactiveObjectsInitializer.ListOfColoringBonuses);
 
             _interactiveObject = new ListInteractiveObject();
 
@@ -70,6 +70,12 @@ namespace Labyrinth
             _viewInitializer.ShowNewSpeed(_player.Speed);
         }
 
+        private void Start()
+        {
+            _coloringBonuses = new ListOfColoringBonuses();
+            _executeObject.AddExecuteObject(_coloringBonuses);
+        }
+        
         private void Update()
         {
             for (var i = 0; i < _executeObject.Length; i++)

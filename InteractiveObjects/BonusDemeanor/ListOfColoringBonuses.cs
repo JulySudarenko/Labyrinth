@@ -1,4 +1,5 @@
 ﻿using System;
+using Object = UnityEngine.Object;
 
 
 namespace Labyrinth
@@ -7,8 +8,19 @@ namespace Labyrinth
     {
         private ColorController[] _coloringBonuses;
 
-        public ListOfColoringBonuses() => _coloringBonuses = new ColorController[] { };
-
+        //public ListOfColoringBonuses() => _coloringBonuses = new ColorController[] { };
+        public ListOfColoringBonuses()
+        {
+            var bonses = Object.FindObjectsOfType<InteractiveObject>();
+            foreach (var b in bonses)
+            {
+                if(b is ColorBonus colorBonus)
+                {
+                    AddColoringBonus(colorBonus);
+                }
+            }
+        }
+        
         public int Count => _coloringBonuses.Length;
 
         public void AddColoringBonus(InteractiveObject interactive)

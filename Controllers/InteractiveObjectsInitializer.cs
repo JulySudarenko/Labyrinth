@@ -1,6 +1,4 @@
 ﻿
-using System.Collections.Generic;
-using UnityEngine;
 
 namespace Labyrinth
 {
@@ -9,6 +7,7 @@ namespace Labyrinth
         private ListOfFlyingBonuses _flyingBonuses;
         private ListOfRotatingBonuses _rotatingBonuses;
         private ListOfFlickeringBonuses _flickeringBonuses;
+        private ListOfColoringBonuses _coloringBonuses;
         private HoleBonus _holeBonus;
         private BadSpeedBonus _badSpeedBonus;
         private HighSpeedBonus _highSpeedBonus;
@@ -17,6 +16,7 @@ namespace Labyrinth
         public ListOfFlyingBonuses ListOfFlyingBonuses => _flyingBonuses;
         public ListOfRotatingBonuses ListOfRotatingBonuses => _rotatingBonuses;
         public ListOfFlickeringBonuses ListOfFlickeringBonuses => _flickeringBonuses;
+        public ListOfColoringBonuses ListOfColoringBonuses => _coloringBonuses;
 
         public HoleBonus HoleBonus => _holeBonus;
 
@@ -25,12 +25,13 @@ namespace Labyrinth
         public void Initialize()
         {
             var bonusReference = new BonusReference();
-            
+
             _flyingBonuses = new ListOfFlyingBonuses();
             _flickeringBonuses = new ListOfFlickeringBonuses();
             _rotatingBonuses = new ListOfRotatingBonuses();
-            
-            _holeBonus = bonusReference.HoleBonus; 
+            //_coloringBonuses = new ListOfColoringBonuses();
+
+            _holeBonus = bonusReference.HoleBonus;
 
             _badSpeedBonus = bonusReference.BadSpeedBonus;
             _flyingBonuses.AddFlyingBonus(_badSpeedBonus);

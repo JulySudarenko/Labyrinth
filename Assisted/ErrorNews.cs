@@ -5,12 +5,9 @@ namespace Labyrinth
 {
     public sealed class ErrorNews : Exception
     {
-        private float LowerLimit { get; }
-        private float UpperLimit { get; }
-        public ErrorNews(string message, float lowerLimit, float upperLimit) : base(message)
+        public ErrorNews(string message) : base(message)
         {
-            LowerLimit = lowerLimit;
-            UpperLimit = upperLimit;
+
         }
     }
 }

@@ -3,23 +3,18 @@
 
 namespace Labyrinth
 {
-    public class ColorController// : IExecute
+    public class ColorController
     {
-        private Color _coloringBonus;
+        private Renderer _coloringBonus;
 
         public ColorController(InteractiveObject coloringBonus)
         {
-            _coloringBonus = coloringBonus.GetComponent<Renderer>().sharedMaterial.color;
+            _coloringBonus = coloringBonus.GetComponent<Renderer>();
         }
 
         public void ChangeColor()
         {
-            _coloringBonus = Random.ColorHSV();
-        }
-
-        public void Execute()
-        {
-            ChangeColor();
+            _coloringBonus.sharedMaterial.color = UnityEngine.Random.ColorHSV();
         }
     }
 }

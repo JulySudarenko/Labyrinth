@@ -7,7 +7,7 @@ namespace Labyrinth
     {
         protected override void Interaction()
         {
-            throw new System.NotImplementedException();
+            _player.SpeedBonusActions["ChangeColor"]?.Invoke();
         }
     }
 }
