@@ -8,7 +8,7 @@ namespace Labyrinth
     {
         #region Field
 
-        public PlayerType PlayerType = PlayerType.Ball;
+        [SerializeField] private Data _data;
         private ListExecuteObject _executeObject;
         private ListInteractiveObject _interactiveObject;
         private ListOfColoringBonuses _coloringBonuses;
@@ -16,7 +16,7 @@ namespace Labyrinth
         private ViewInitializer _viewInitializer;
         private CameraController _cameraController;
         private InputController _inputController;
-        private PlayerBase _player;
+        private PlayerFactory _player;
 
         #endregion
 
@@ -30,12 +30,9 @@ namespace Labyrinth
             _interactiveObjectsInitializer.Initialize();
 
             var reference = new Reference();
-
-            _player = null;
-            if (PlayerType == PlayerType.Ball)
-            {
-                _player = reference.PlayerBall;
-            }
+            
+            var playerFactory = new PlayerFactory(_data.Player);
+            var playerInitialization = new PlayerInitialization(playerFactory);
 
             _executeObject.AddExecuteObject(_interactiveObjectsInitializer.ListOfFlyingBonuses);
             _executeObject.AddExecuteObject(_interactiveObjectsInitializer.ListOfFlickeringBonuses);
@@ -44,15 +41,15 @@ namespace Labyrinth
 
             _interactiveObject = new ListInteractiveObject();
 
-            _cameraController = new CameraController(_player.transform, reference.MainCamera.transform);
+            _cameraController = new CameraController(playerInitialization.GetPlayer(), reference.MainCamera.transform);
             _executeObject.AddExecuteObject(_cameraController);
-
-            _inputController = new InputController(_player, _interactiveObject);
+            
+            _inputController = new InputController(playerInitialization.GetPlayer(), _interactiveObject);
             _executeObject.AddExecuteObject(_inputController);
-
+            
             _viewInitializer = new ViewInitializer();
-            _viewInitializer.InitializeDisplay();
-            _player.ShowSpeedAction += _viewInitializer.ShowNewSpeed;
+            _viewInitializer.Initialize();
+            //_playerFactory.ShowSpeedAction += _viewInitializer.ShowNewSpeed;
             _interactiveObjectsInitializer.HoleBonus.OnCaughtPlayerChange += _viewInitializer.CaughtPlayer;
 
             foreach (var winBonus in _interactiveObjectsInitializer.WinBonuses)
@@ -63,11 +60,11 @@ namespace Labyrinth
 
             if (Application.platform == RuntimePlatform.WindowsEditor)
             {
-                _inputController = new InputController(_player, _interactiveObject);
+                _inputController = new InputController(playerInitialization.GetPlayer(), _interactiveObject);
                 _executeObject.AddExecuteObject(_inputController);
             }
 
-            _viewInitializer.ShowNewSpeed(_player.Speed);
+            //_viewInitializer.ShowNewSpeed(_player.Speed);
         }
 
         private void Start()
@@ -108,7 +105,7 @@ namespace Labyrinth
                 }
             }
 
-            _player.ShowSpeedAction -= _viewInitializer.ShowNewSpeed;
+            //_player.ShowSpeedAction -= _viewInitializer.ShowNewSpeed;
         }
 
         #endregion

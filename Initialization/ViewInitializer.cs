@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Labyrinth
 {
-    public class ViewInitializer
+    public class ViewInitializer : IInitialization
     {
         #region Fields
 
@@ -18,7 +18,7 @@ namespace Labyrinth
 
         private int _countBonuses;
         private int _winBonusRemained;
-        
+
         public int WinBonusRemained
         {
             get => _winBonusRemained;
@@ -27,10 +27,10 @@ namespace Labyrinth
 
         #endregion
 
-        
+
         #region Methods
 
-        public void InitializeDisplay()
+        public void Initialize()
         {
             _displayReference = new DisplayReference();
             Debug.Log(_displayReference);
@@ -39,21 +39,21 @@ namespace Labyrinth
             _displayWinGame = new DisplayWinGame(_displayReference.WinGame);
             _displaySpeed = new DisplaySpeed(_displayReference.SpeedDisplay);
             _restartButton = _displayReference.RestartButton;
-            
+
             _restartButton.onClick.AddListener(RestartGame);
             _restartButton.gameObject.SetActive(false);
         }
- 
+
         public void CaughtPlayer(string value, Color args)
         {
             _restartButton.gameObject.SetActive(true);
             _displayEndGame.ShowLoseGameLabel(value, args);
             Time.timeScale = 0.0f;
         }
-        
+
         private void RestartGame()
         {
-            SceneManager.LoadScene(sceneBuildIndex: 0); 
+            SceneManager.LoadScene(sceneBuildIndex: 0);
             Time.timeScale = 1.0f;
         }
 

@@ -10,7 +10,7 @@ namespace Labyrinth
 
         public bool IsFly;
 
-        protected PlayerBase _player;
+        protected PlayerFactory _player;
         protected Color _color;
         protected Renderer _renderer;
         protected Collider _collider;
@@ -56,7 +56,7 @@ namespace Labyrinth
                 return;
             }
 
-            _player = other.GetComponent<PlayerBase>();
+            _player = other.GetComponent<PlayerFactory>();
             Interaction();
             IsInteractable = false;
         }

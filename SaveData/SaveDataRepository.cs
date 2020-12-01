@@ -29,7 +29,7 @@ namespace Labyrinth
             _path = Path.Combine(Application.dataPath, _folderName);
         }
 
-        public void Save(PlayerBase player, ListInteractiveObject interactiveObject)
+        public void Save(Transform player, ListInteractiveObject interactiveObject)
         {
             if (!Directory.Exists(Path.Combine(_path)))
             {
@@ -43,10 +43,10 @@ namespace Labyrinth
                 Position = player.transform.position,
                 Name = player.name,
                 //Speed = player.Speed,
-                IsEnabled = player.enabled,
+                //IsEnabled = player.gameObject.enabled,
             };
 
-            savePlayer.AddTo(saveList);
+            //savePlayer.AddTo(saveList);
             foreach (var i in interactiveObject)
             {
                 if (i is InteractiveObject bonus)
@@ -66,7 +66,7 @@ namespace Labyrinth
             _data.Save(saveList, Path.Combine(_path, _fileName));
         }
 
-        public void Load(PlayerBase player, ListInteractiveObject interactiveObject)
+        public void Load(Transform player, ListInteractiveObject interactiveObject)
         {
             var file = Path.Combine(_path, _fileName);
             if (!File.Exists(file))

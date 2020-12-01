@@ -1,7 +1,6 @@
 ﻿using System;
 using Labyrinth;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 
 namespace CSharpUnityExamples

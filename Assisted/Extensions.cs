@@ -36,7 +36,7 @@ namespace Labyrinth
             return elem.Contains(self);
         }
 
-        public static T GetOrAddComponent<T>(this Component child) where T : Component
+        public static T GetOrAddComponent<T>(this GameObject child) where T : Component
         {
             T result = child.GetComponent<T>() ?? child.gameObject.AddComponent<T>();
             return result;

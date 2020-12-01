@@ -2,8 +2,10 @@
 
 namespace Labyrinth
 {
-    public class InteractiveObjectsInitializer
+    public class InteractiveObjectsInitializer : IInitialization
     {
+        #region Fields
+
         private ListOfFlyingBonuses _flyingBonuses;
         private ListOfRotatingBonuses _rotatingBonuses;
         private ListOfFlickeringBonuses _flickeringBonuses;
@@ -22,6 +24,9 @@ namespace Labyrinth
 
         public WinBonus[] WinBonuses => _winBonuses;
 
+        #endregion
+
+        
         public void Initialize()
         {
             var bonusReference = new BonusReference();
