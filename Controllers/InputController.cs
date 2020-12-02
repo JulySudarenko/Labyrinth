@@ -9,53 +9,36 @@ namespace Labyrinth
         private readonly Transform _player;
         private readonly ListInteractiveObject _interactiveObject;
         private readonly SaveDataRepository _saveDataRepository;
+        private readonly IUserInputProxy _horizontal;
+        private readonly IUserInputProxy _vertical;
 
-        // public InputController(PlayerBase player, ListInteractiveObject interactiveObject)
-        // {
-        //     _playerBase = player;
-        //
-        //     _interactiveObject = interactiveObject;
-        //     
-        //     _saveDataRepository = new SaveDataRepository();
-        // }
-        
-        public InputController(Transform player, ListInteractiveObject interactiveObject)
+
+        public InputController(Transform player, ListInteractiveObject interactiveObject,
+            (IUserInputProxy inputHorizontal, IUserInputProxy inputVertical) input)
         {
             _player = player;
 
             _interactiveObject = interactiveObject;
-            
+
             _saveDataRepository = new SaveDataRepository();
+            _horizontal = input.inputHorizontal;
+            _vertical = input.inputVertical;
         }
-        
+
         public void Execute()
         {
-            //_player.Move(Input.GetAxis(HORIZONTAL), 0.0f, Input.GetAxis(VERTICAL));
-        
+            _horizontal.GetAxis();
+            _vertical.GetAxis();
+
             if (Input.GetKeyDown(SAVE))
             {
                 _saveDataRepository.Save(_player, _interactiveObject);
             }
-        
+
             if (Input.GetKeyDown(LOAD))
             {
                 _saveDataRepository.Load(_player, _interactiveObject);
             }
         }
-        
-        // public void Execute()
-        // {
-        //     _playerBase.Move(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
-        //
-        //     if (Input.GetKeyDown(_savePlayer))
-        //     {
-        //         _saveDataRepository.Save(_playerBase, _interactiveObject);
-        //     }
-        //
-        //     if (Input.GetKeyDown(_loadPlayer))
-        //     {
-        //         _saveDataRepository.Load(_playerBase, _interactiveObject);
-        //     }
-        // }
     }
 }

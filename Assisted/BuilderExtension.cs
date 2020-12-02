@@ -5,6 +5,11 @@ namespace Labyrinth
 {
     public static class BuilderExtension
     {
+        public static GameObject AddTag(this GameObject gameObject, string tag)
+        {
+            gameObject.tag = tag;
+            return gameObject;
+        }
         public static GameObject AddName(this GameObject gameObject, string name)
         {
             gameObject.name = name;

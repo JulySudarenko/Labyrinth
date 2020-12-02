@@ -6,17 +6,17 @@ namespace Labyrinth
 {
     public static class TimeScaleForBonus
     {
-        public delegate void MakeBaseSpeed();
-        public static void StartTheCountdown(MonoBehaviour parent, int interval, MakeBaseSpeed speedMaker)
+        public delegate void UndoChangesToThePlayer();
+        public static void StartTheCountdown(MonoBehaviour parent, int interval, UndoChangesToThePlayer cancelChanges)
         {
-            parent.StartCoroutine(TimeBonus(interval, speedMaker));
+            parent.StartCoroutine(TimeBonus(interval, cancelChanges));
         }
         
-        public static IEnumerator TimeBonus(int interval, MakeBaseSpeed speedMaker)
+        public static IEnumerator TimeBonus(int interval, UndoChangesToThePlayer cancelChanges)
         {
             yield return new WaitForSeconds(interval);
         
-            speedMaker();
+            cancelChanges();
         }
     }
 }

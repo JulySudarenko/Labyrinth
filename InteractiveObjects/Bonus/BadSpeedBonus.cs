@@ -6,7 +6,7 @@ namespace Labyrinth
     {
         protected override void Interaction()
         {
-            //_player.SpeedBonusActions["SpeedDown"]?.Invoke();
+            _playerSpeed.SpeedBonusActions["SpeedDown"]?.Invoke();
         }
 
     }

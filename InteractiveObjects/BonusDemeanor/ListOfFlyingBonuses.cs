@@ -27,14 +27,7 @@ namespace Labyrinth
         {
             foreach (var interactive in interactives)
             {
-                if (_flyingBonuses == null)
-                {
-                    _flyingBonuses = new[] {new FlyController(interactive)};
-                    return;
-                }
-
-                Array.Resize(ref _flyingBonuses, Count + 1);
-                _flyingBonuses[Count - 1] = new FlyController(interactive);
+                AddFlyingBonus(interactive);
             }
         }
 

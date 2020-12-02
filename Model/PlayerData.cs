@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 namespace Labyrinth
 {
     [CreateAssetMenu(fileName = "Player", menuName = "Data/Player")]
-    public class PlayerData : ScriptableObject, ISpeed
+    public class PlayerData : ScriptableObject//, ISpeed
     {
         [FormerlySerializedAs("BallTranssform")] public Transform BallTransform;
 

@@ -1,6 +1,6 @@
 ﻿namespace Labyrinth
 {
-    public interface IInitialization
+    public interface IInitialization : IController
     {
         void Initialize();
     }

@@ -8,9 +8,7 @@ namespace Labyrinth
     {
         #region Field
 
-        public bool IsFly;
-
-        protected PlayerFactory _player;
+        protected SpeedController _playerSpeed;
         protected Color _color;
         protected Renderer _renderer;
         protected Collider _collider;
@@ -33,10 +31,7 @@ namespace Labyrinth
 
         #endregion
 
-
-        #region UnityMethods
-
-        private void Start()
+        public void Start()
         {
             _collider = GetComponent<Collider>();
             _renderer = GetComponent<Renderer>();
@@ -47,8 +42,12 @@ namespace Labyrinth
             {
                 renderer.material.color = _color;
             }
-        }
 
+            //_playerSpeed = playerSpeed;
+        }
+        
+        #region UnityMethods
+        
         private void OnTriggerEnter(Collider other)
         {
             if (!IsInteractable || !other.CompareTag("Player"))
@@ -56,7 +55,7 @@ namespace Labyrinth
                 return;
             }
 
-            _player = other.GetComponent<PlayerFactory>();
+            //_player = other.GetComponent<PlayerFactory>();
             Interaction();
             IsInteractable = false;
         }
@@ -71,9 +70,6 @@ namespace Labyrinth
             #if UNITY_EDITOR
             Transform t = transform;
 
-            //Gizmos.matrix = Matrix4x4.TRS(t.position, t.rotation, t.localScale);
-            //Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
-
             var flat = new Vector3(ActiveDis, 0, ActiveDis);
             Gizmos.matrix = Matrix4x4.TRS(t.position, t.rotation, flat);
             Gizmos.DrawWireSphere(Vector3.zero, 5);
@@ -86,6 +82,11 @@ namespace Labyrinth
         #region Methods
 
         protected abstract void Interaction();
+
+        public void ConnectToPlayerComponents(SpeedController speedController)
+        {
+            _playerSpeed = speedController;
+        }
 
         #endregion
     }

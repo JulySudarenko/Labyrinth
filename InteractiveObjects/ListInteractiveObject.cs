@@ -14,7 +14,6 @@ namespace Labyrinth
         public ListInteractiveObject()
         {
             _interactiveObjects = Object.FindObjectsOfType<InteractiveObject>();
-            // Array.Sort(_interactiveObjects);
         }
         
         public int Count => _interactiveObjects.Length;
