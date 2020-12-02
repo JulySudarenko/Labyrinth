@@ -13,13 +13,13 @@ namespace Labyrinth
         private readonly float _baseSpeed;
 
         private const float _speedChanger = 2.0f;
-        private const int _interval = 10;
+        private const int INTERVAL = 10;
 
         public float Speed => _playerSpeed;
 
-        public SpeedController(PlayerData _playerData)
+        public SpeedController(PlayerData playerData)
         {
-            _playerSpeed = _playerData.Speed;
+            _playerSpeed = playerData.Speed;
             _baseSpeed = _playerSpeed;
             
             

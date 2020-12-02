@@ -10,7 +10,6 @@ namespace Labyrinth
 
         [SerializeField] private Data _data;
         private Controllers _controllers;
-
         private ListInteractiveObject _interactiveObject;
         private ListOfColoringBonuses _coloringBonuses;
         private InteractiveObjectsInitializer _interactiveObjectsInitializer;
@@ -36,20 +35,13 @@ namespace Labyrinth
             var playerInitialization = new PlayerInitialization(playerFactory);
 
             _interactiveObject = new ListInteractiveObject();
-
-            // foreach(var interactive in _interactiveObject)
-            // {
-            //     interactive.
-            // }
+            //_interactiveObject.ConnectAll(_speedController);
             
             _controllers = new Controllers();
 
             _controllers.Add(_interactiveObjectsInitializer.ListOfFlyingBonuses);
             _controllers.Add(_interactiveObjectsInitializer.ListOfFlickeringBonuses);
             _controllers.Add(_interactiveObjectsInitializer.ListOfRotatingBonuses);
-
-            // _cameraController = new CameraController(playerInitialization.GetPlayer(), reference.MainCamera.transform);
-            // _executeObject.AddExecuteObject(_cameraController);
 
             var inputInitialization = new InputInitialization();
             _inputController = new InputController(playerInitialization.GetPlayer(), _interactiveObject,
@@ -64,7 +56,7 @@ namespace Labyrinth
                 _speedController));
             _controllers.Add(new CameraController(playerInitialization.GetPlayer(), reference.MainCamera.transform));
             _controllers.Initialize();
-
+        
             _speedController.ShowSpeedAction += _viewInitializer.ShowNewSpeed;
             _interactiveObjectsInitializer.HoleBonus.OnCaughtPlayerChange += _viewInitializer.CaughtPlayer;
 
@@ -99,7 +91,6 @@ namespace Labyrinth
             {
                 winBonus.OnPointChange -= _viewInitializer.AddBonus;
             }
-
             _interactiveObjectsInitializer.HoleBonus.OnCaughtPlayerChange -= _viewInitializer.CaughtPlayer;
             _speedController.ShowSpeedAction -= _viewInitializer.ShowNewSpeed;
         }

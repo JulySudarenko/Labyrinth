@@ -1,4 +1,6 @@
-﻿namespace Labyrinth
+﻿
+
+namespace Labyrinth
 {
     public interface ISpeed
     {

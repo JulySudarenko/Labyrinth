@@ -26,11 +26,6 @@ namespace Labyrinth
             _verticalInputProxy.AxisOnChange += VerticalOnAxisOnChange;
         }
 
-        // public void Move(Transform player, float x, float y, float z)
-        // {
-        //     _player.GetComponent<Rigidbody>().AddForce(new Vector3(x, y, z) * _speed);
-        // }
-
         private void VerticalOnAxisOnChange(float value)
         {
             _vertical = value;
@@ -43,10 +38,13 @@ namespace Labyrinth
 
         public void Execute()
         {
-            //var speed =  _speed.Speed;
             _rigidbody.AddForce(new Vector3(_horizontal, 0.0f, _vertical) * _speed.Speed);
-            //_move.Set(new Vector3(, _horizontal, 0.0f, _vertical) * _speed.Speed);
-            //_player.rilocalPosition += _move;
+        }
+
+        public void Cleanup()
+        {
+            _horizontalInputProxy.AxisOnChange -= HorizontalOnAxisOnChange;
+            _verticalInputProxy.AxisOnChange -= VerticalOnAxisOnChange;
         }
     }
 }

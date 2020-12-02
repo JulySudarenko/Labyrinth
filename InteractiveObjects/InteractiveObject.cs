@@ -36,14 +36,12 @@ namespace Labyrinth
             _collider = GetComponent<Collider>();
             _renderer = GetComponent<Renderer>();
             IsInteractable = true;
-
+        
             _color = Random.ColorHSV();
             if (TryGetComponent(out Renderer renderer))
             {
                 renderer.material.color = _color;
             }
-
-            //_playerSpeed = playerSpeed;
         }
         
         #region UnityMethods

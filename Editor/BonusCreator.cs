@@ -31,7 +31,7 @@ namespace Labyrinth
                 }
                 else
                 {
-                    throw new ErrorNews("Something goes wrong. There is no coloring bonus. Check the objects on the script.");
+                    throw new ErrorNews("Check the objects on the script.");
                 }
             }
         }

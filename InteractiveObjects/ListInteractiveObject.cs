@@ -62,5 +62,13 @@ namespace Labyrinth
         {
             return GetEnumerator();
         }
+
+        public void ConnectAll(SpeedController speedController)
+        {
+            foreach (var interactive in _interactiveObjects)
+            {
+                interactive.ConnectToPlayerComponents(speedController);
+            }
+        }
     }
 }
