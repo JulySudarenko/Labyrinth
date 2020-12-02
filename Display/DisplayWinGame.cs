@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Labyrinth
 {
-    public sealed class DisplayWinGame
+    public sealed class DisplayWinGame : IView
     {
         private readonly Text _winLabel;
 

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Labyrinth
 {
-    public sealed class DisplaySpeed
+    public sealed class DisplaySpeed : IView
     {
         private readonly Text _speedLabel;
 

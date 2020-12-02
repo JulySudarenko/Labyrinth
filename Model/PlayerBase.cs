@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static Labyrinth.TimeScaleForBonus;
 
 
 namespace Labyrinth
@@ -13,12 +13,14 @@ namespace Labyrinth
         public Dictionary<string, Action> SpeedBonusActions;
         public event Action<float> ShowSpeedAction;
 
-        public float Speed = 3.0f;
+        private float _speed = 3.0f;
         public abstract void Move(float x, float y, float z);
 
         private float _speedChanger = 2.0f;
         private float _baseSpeed;
         private int _interval = 10;
+
+        public float Speed => _speed;
 
         #endregion
 
@@ -33,7 +35,9 @@ namespace Labyrinth
                 ["SpeedUp"] = SpeedUp,
                 ["SpeedDown"] = SpeedDown,
                 ["SpeedBase"] = SpeedBase,
+                ["ReturnBaseSpeed"] = ReturnBaseSpeed,
             };
+            MakeBaseSpeed makeBaseSpeed = ReturnBaseSpeed;
         }
 
         #endregion
@@ -41,41 +45,29 @@ namespace Labyrinth
 
         #region Methods
 
-        public void SpeedBase()
+        private void SpeedBase()
         {
-            StartCoroutine(TimeBonus(_interval));
+            StartTheCountdown(this, _interval, ReturnBaseSpeed);
         }
 
-        public void SpeedDown()
+        private void SpeedDown()
         {
-            Speed /= _speedChanger;
-            ShowSpeedAction?.Invoke(Speed);
+            _speed /= _speedChanger;
+           ShowSpeedAction?.Invoke(Speed);
             SpeedBase();
         }
 
-        public void SpeedUp()
+        private void SpeedUp()
         {
-            Speed *= _speedChanger;
+            _speed *= _speedChanger;
             ShowSpeedAction?.Invoke(Speed);
             SpeedBase();
         }
 
         private void ReturnBaseSpeed()
         {
-            Speed = _baseSpeed;
+            _speed = _baseSpeed;
             ShowSpeedAction?.Invoke(Speed);
-        }
-
-        public void Dead()
-        {
-            Destroy(gameObject);
-        }
-
-        IEnumerator TimeBonus(int _interval)
-        {
-            yield return new WaitForSeconds(_interval);
-
-            ReturnBaseSpeed();
         }
 
         #endregion

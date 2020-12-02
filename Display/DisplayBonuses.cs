@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Labyrinth
 {
-    public sealed class DisplayBonuses
+    public sealed class DisplayBonuses : IView
     {
         private Text _textPoints;
 
