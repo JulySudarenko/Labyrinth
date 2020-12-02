@@ -72,7 +72,7 @@ namespace Labyrinth
                 if (o is HoleBonus holeBonus)
                 {
                     holeBonus.OnCaughtPlayerChange += CaughtPlayer;
-                    holeBonus.OnCaughtPlayerChange += _displayEndGame.GameOver;
+                    holeBonus.OnCaughtPlayerChange += _displayEndGame.ShowLoseGameLabel;
                 }
                 
                 if (o is WinBonus winBonus)
@@ -118,7 +118,7 @@ namespace Labyrinth
             _winBonusRemained--;
             if (_winBonusRemained == 0)
             {
-                Victory();
+                СongratulateVictory();
                 _restartButton.gameObject.SetActive(true);
             }
         }
@@ -130,7 +130,7 @@ namespace Labyrinth
             Time.timeScale = 1.0f;
         }
 
-        private void Victory()
+        private void СongratulateVictory()
         {
             Dispose();
             _displayWinGame.WinGame();
@@ -149,7 +149,7 @@ namespace Labyrinth
                 if (o is HoleBonus holeBonus)
                 {
                     holeBonus.OnCaughtPlayerChange -= CaughtPlayer;
-                    holeBonus.OnCaughtPlayerChange -= _displayEndGame.GameOver;
+                    holeBonus.OnCaughtPlayerChange -= _displayEndGame.ShowLoseGameLabel;
                 }
             
                 if (o is WinBonus winBonus)

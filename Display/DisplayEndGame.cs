@@ -15,7 +15,7 @@ namespace Labyrinth
             _finishGameLabel.text = String.Empty;
         }
 
-        public void GameOver(string name, Color color)
+        public void ShowLoseGameLabel(string name, Color color)
         {
             _finishGameLabel.text = $"Вы проиграли. Вас убил {name} {color} цвета";
         }
