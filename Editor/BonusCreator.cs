@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEngine.Serialization;
+﻿using System;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 
@@ -8,20 +8,15 @@ namespace Labyrinth
     public class BonusCreator : MonoBehaviour
     {
         public GameObject Bottom;
-        [FormerlySerializedAs("ColorBonus")] public GameObject ColorBonusPrefab;
+        public GameObject ColorBonusPrefab;
         public ColorBonus ColorBonus;
         public string NameObject = "ColorBonus";
         public int Count = 10;
         private Transform _root;
 
-        private void Awake()
+         public void CreateBonus()
         {
-            CreateBonus();
-        }
-
-        private void CreateBonus()
-        {
-            _root = new GameObject("Root").transform;
+            _root = new GameObject("ColorBonus").transform;
             for (int i = 0; i < Count; i++)
             {
                 if (ColorBonusPrefab != null & !ColorBonus)

@@ -34,7 +34,7 @@ namespace Labyrinth
             {
                 if (_objectInstantiate)
                 {
-                    GameObject root = new GameObject("Root");
+                    GameObject root = new GameObject("DiscoBall");
                     for (int i = 0; i < _countColorBall; i++)
                     {
                         Vector3 pos = new Vector3(Random.Range(_minX, _maxX), 

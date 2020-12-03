@@ -9,18 +9,18 @@ namespace Labyrinth
     public class PlayerColorController
     {
         public Dictionary<string, Action> ColorBonusActions;
-        
+
         private Color _playerColor;
         private readonly Color _baseColor;
-        
+
         private const int INTERVAL = 10;
-        
-        public PlayerColorController(PlayerData playerData)
+
+        public PlayerColorController(PlayerData playerData, Transform player)
         {
             _playerColor = playerData.BallMaterial.color;
-            _baseColor = _playerColor;
-            
-            
+            _baseColor = playerData.BallMaterial.color;
+
+
             ColorBonusActions = new Dictionary<string, Action>
             {
                 ["ChangeColor"] = ChangeColor,
@@ -28,14 +28,14 @@ namespace Labyrinth
             };
         }
 
-        private void ReturnBaseColor()
-        {
-            _playerColor = Random.ColorHSV();
-        }
-
-        private void ChangeColor()
+        public void ReturnBaseColor()
         {
             _playerColor = _baseColor;
+        }
+
+        public void ChangeColor()
+        {
+            _playerColor = Random.ColorHSV();
         }
     }
 }

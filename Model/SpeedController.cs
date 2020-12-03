@@ -8,12 +8,10 @@ namespace Labyrinth
     {
         public Dictionary<string, Action> SpeedBonusActions;
         public event Action<float> ShowSpeedAction;
-        
-        private float _playerSpeed;
-        private readonly float _baseSpeed;
-
         private const float _speedChanger = 2.0f;
-        private const int INTERVAL = 10;
+        private readonly float _baseSpeed;
+        private float _playerSpeed;
+
 
         public float Speed => _playerSpeed;
 
@@ -21,36 +19,28 @@ namespace Labyrinth
         {
             _playerSpeed = playerData.Speed;
             _baseSpeed = _playerSpeed;
-            
-            
+
+
             SpeedBonusActions = new Dictionary<string, Action>
             {
                 ["SpeedUp"] = SpeedUp,
                 ["SpeedDown"] = SpeedDown,
-                ["SpeedBase"] = SpeedBase,
                 ["ReturnBaseSpeed"] = ReturnBaseSpeed,
             };
         }
-        
-        #region Methods
 
-        private void SpeedBase()
-        {
-            //StartTheCountdown(this, _interval, ReturnBaseSpeed);
-        }
+        #region Methods
 
         private void SpeedDown()
         {
             _playerSpeed /= _speedChanger;
             ShowSpeedAction?.Invoke(Speed);
-            SpeedBase();
         }
 
         private void SpeedUp()
         {
             _playerSpeed *= _speedChanger;
             ShowSpeedAction?.Invoke(Speed);
-            SpeedBase();
         }
 
         private void ReturnBaseSpeed()

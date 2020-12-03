@@ -1,10 +1,9 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 namespace Labyrinth
 {
-    public sealed class GameController : MonoBehaviour, IDisposable
+    public sealed class GameController : MonoBehaviour, ICleanup
     {
         #region Field
 
@@ -17,6 +16,7 @@ namespace Labyrinth
         private CameraController _cameraController;
         private InputController _inputController;
         private SpeedController _speedController;
+        private PlayerColorController _colorController;
 
         #endregion
 
@@ -30,22 +30,27 @@ namespace Labyrinth
             _viewInitializer = new ViewInitializer();
             _speedController = new SpeedController(_data.Player);
 
+            GetComponentInChildren<BonusCreator>().CreateBonus();
+            _coloringBonuses = new ListOfColoringBonuses();
+
             var reference = new Reference();
             var playerFactory = new PlayerFactory(_data.Player);
             var playerInitialization = new PlayerInitialization(playerFactory);
 
             _interactiveObject = new ListInteractiveObject();
-            //_interactiveObject.ConnectAll(_speedController);
-            
+
             _controllers = new Controllers();
 
             _controllers.Add(_interactiveObjectsInitializer.ListOfFlyingBonuses);
             _controllers.Add(_interactiveObjectsInitializer.ListOfFlickeringBonuses);
             _controllers.Add(_interactiveObjectsInitializer.ListOfRotatingBonuses);
+            _controllers.Add(_coloringBonuses);
 
             var inputInitialization = new InputInitialization();
             _inputController = new InputController(playerInitialization.GetPlayer(), _interactiveObject,
                 inputInitialization.GetInput());
+            _colorController = new PlayerColorController(_data.Player, playerInitialization.GetPlayer());
+            _interactiveObject.ConnectAll(_speedController, _colorController);
 
             _controllers.Add(_viewInitializer);
             _controllers.Add(inputInitialization);
@@ -56,7 +61,7 @@ namespace Labyrinth
                 _speedController));
             _controllers.Add(new CameraController(playerInitialization.GetPlayer(), reference.MainCamera.transform));
             _controllers.Initialize();
-        
+
             _speedController.ShowSpeedAction += _viewInitializer.ShowNewSpeed;
             _interactiveObjectsInitializer.HoleBonus.OnCaughtPlayerChange += _viewInitializer.CaughtPlayer;
 
@@ -69,15 +74,14 @@ namespace Labyrinth
             _viewInitializer.ShowNewSpeed(_speedController.Speed);
         }
 
-        private void Start()
-        {
-            _coloringBonuses = new ListOfColoringBonuses();
-            _controllers.Add(_coloringBonuses);
-        }
-
         private void Update()
         {
             _controllers.Execute();
+        }
+
+        private void OnDestroy()
+        {
+            _controllers.Cleanup();
         }
 
         #endregion
@@ -85,12 +89,13 @@ namespace Labyrinth
 
         #region Methods
 
-        public void Dispose()
+        public void Cleanup()
         {
             foreach (var winBonus in _interactiveObjectsInitializer.WinBonuses)
             {
                 winBonus.OnPointChange -= _viewInitializer.AddBonus;
             }
+
             _interactiveObjectsInitializer.HoleBonus.OnCaughtPlayerChange -= _viewInitializer.CaughtPlayer;
             _speedController.ShowSpeedAction -= _viewInitializer.ShowNewSpeed;
         }

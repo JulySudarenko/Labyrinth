@@ -3,7 +3,7 @@
 
 namespace Labyrinth
 {
-    public class MoveController : IExecute
+    public class MoveController : IExecute, ICleanup
     {
         private readonly Transform _player;
         private readonly Rigidbody _rigidbody;
@@ -13,7 +13,7 @@ namespace Labyrinth
         private Vector3 _move;
         private IUserInputProxy _horizontalInputProxy;
         private IUserInputProxy _verticalInputProxy;
-        
+
         public MoveController((IUserInputProxy inputHorizontal, IUserInputProxy inputVertical) input,
             Transform player, ISpeed speed)
         {

@@ -1,6 +1,4 @@
-﻿
-
-namespace Labyrinth
+﻿namespace Labyrinth
 {
     public class InteractiveObjectsInitializer : IInitialization
     {
@@ -9,8 +7,6 @@ namespace Labyrinth
         private ListOfFlyingBonuses _flyingBonuses;
         private ListOfRotatingBonuses _rotatingBonuses;
         private ListOfFlickeringBonuses _flickeringBonuses;
-
-        private ListOfColoringBonuses _coloringBonuses;
 
         private HoleBonus _holeBonus;
         private BadSpeedBonus _badSpeedBonus;
@@ -36,6 +32,7 @@ namespace Labyrinth
         public void Initialize()
         {
             var bonusReference = new BonusReference();
+
             _flyingBonuses = new ListOfFlyingBonuses();
             _flickeringBonuses = new ListOfFlickeringBonuses();
             _rotatingBonuses = new ListOfRotatingBonuses();
@@ -53,7 +50,6 @@ namespace Labyrinth
             _winBonuses = bonusReference.WinBonuses;
             _flickeringBonuses.AddManyFlickeringBonus(_winBonuses);
             _flyingBonuses.AddManyFlyingBonus(_winBonuses);
-                
         }
     }
 }

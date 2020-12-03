@@ -10,6 +10,7 @@ namespace Labyrinth
             gameObject.tag = tag;
             return gameObject;
         }
+
         public static GameObject AddName(this GameObject gameObject, string name)
         {
             gameObject.name = name;
@@ -28,20 +29,20 @@ namespace Labyrinth
             component.mesh = mesh;
             return gameObject;
         }
-       
+
         public static GameObject AddRigidbody(this GameObject gameObject, float mass)
         {
             var component = GetOrAddComponent<Rigidbody>(gameObject);
             component.mass = mass;
             return gameObject;
         }
-        
+
         public static GameObject AddSphereCollider(this GameObject gameObject)
         {
             GetOrAddComponent<SphereCollider>(gameObject);
             return gameObject;
         }
-        
+
         public static GameObject AddMaterial(this GameObject gameObject, Material material)
         {
             GetOrAddComponent<MeshRenderer>(gameObject).material = material;
@@ -55,7 +56,7 @@ namespace Labyrinth
             {
                 result = gameObject.AddComponent<T>();
             }
-        
+
             return result;
         }
     }

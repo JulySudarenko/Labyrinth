@@ -9,6 +9,7 @@ namespace Labyrinth
         #region Field
 
         protected SpeedController _playerSpeed;
+        protected PlayerColorController _playerColor;
         protected Color _color;
         protected Renderer _renderer;
         protected Collider _collider;
@@ -53,7 +54,6 @@ namespace Labyrinth
                 return;
             }
 
-            //_player = other.GetComponent<PlayerFactory>();
             Interaction();
             IsInteractable = false;
         }
@@ -81,9 +81,10 @@ namespace Labyrinth
 
         protected abstract void Interaction();
 
-        public void ConnectToPlayerComponents(SpeedController speedController)
+        public void ConnectToPlayerComponents(SpeedController speedController, PlayerColorController colorController)
         {
             _playerSpeed = speedController;
+            _playerColor = colorController;
         }
 
         #endregion

@@ -3,18 +3,18 @@
 
 namespace Labyrinth
 {
-    internal sealed class Controllers : IInitialization, IExecute // ICleanup
+    internal sealed class Controllers : IInitialization, IExecute, ICleanup
     {
         private readonly List<IInitialization> _initializeControllers;
 
         private readonly List<IExecute> _executeControllers;
-        //private readonly List<ICleanup> _cleanupControllers;
+        private readonly List<ICleanup> _cleanupControllers;
 
         internal Controllers()
         {
             _initializeControllers = new List<IInitialization>();
             _executeControllers = new List<IExecute>();
-            //_cleanupControllers = new List<ICleanup>();
+            _cleanupControllers = new List<ICleanup>();
         }
 
         internal Controllers Add(IController controller)
@@ -29,10 +29,10 @@ namespace Labyrinth
                 _executeControllers.Add(executeController);
             }
 
-            // if (controller is ICleanup cleanupController)
-            // {
-            //     _cleanupControllers.Add(cleanupController);
-            // }
+            if (controller is ICleanup cleanupController)
+            {
+                _cleanupControllers.Add(cleanupController);
+            }
 
             return this;
         }
@@ -53,12 +53,12 @@ namespace Labyrinth
             }
         }
 
-        // public void Cleanup()
-        // {
-        //     for (var index = 0; index < _cleanupControllers.Count; ++index)
-        //     {
-        //         _cleanupControllers[index].Cleanup();
-        //     }
-        // }
+        public void Cleanup()
+        {
+            for (var index = 0; index < _cleanupControllers.Count; ++index)
+            {
+                _cleanupControllers[index].Cleanup();
+            }
+        }
     }
 }
