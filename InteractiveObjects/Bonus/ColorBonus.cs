@@ -10,11 +10,11 @@ namespace Labyrinth
         protected override void Interaction()
         {
             _playerColor.ColorBonusActions["ChangeColor"]?.Invoke();
-            UndoChangesToThePlayer changesSpeedToThePlayer = ReturnBaseColor;
-            StartTheCountdown(this, INTERVAL, ReturnBaseColor);
+            UndoChangesToThePlayer changesColorToThePlayer = ReturnColor;
+            StartTheCountdown(this, INTERVAL, ReturnColor);
         }
 
-        private void ReturnBaseColor()
+        private void ReturnColor()
         {
             _playerColor.ColorBonusActions["ReturnBaseColor"].Invoke();
         }

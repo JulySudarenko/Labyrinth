@@ -14,16 +14,16 @@ namespace Labyrinth
             _playerData = playerData;
         }
         
-        public Transform CreatePlayer()
+        public GameObject CreatePlayer()
         {
             return new GameObject().
                 AddName(_name).
                 AddTag(_name).
-                AddTransforn(_playerData.BallTransform).
+                AddTransform(_playerData.BallTransform).
                 AddMesh(_playerData.BallMesh).
                 AddMaterial(_playerData.BallMaterial).
                 AddSphereCollider().
-                AddRigidbody(_mass).transform;
+                AddRigidbody(_mass);
         }
     }
 }

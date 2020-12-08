@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 
 
 namespace Labyrinth
@@ -8,14 +7,11 @@ namespace Labyrinth
     public class PlayerData : ScriptableObject
     {
         public Transform BallTransform;
-
         public Mesh BallMesh;
-
         public Material BallMaterial;
 
         [SerializeField, Range(1, 100)] private float _speed;
 
         public float Speed => _speed;
-
     }
 }

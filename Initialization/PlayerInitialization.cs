@@ -6,8 +6,8 @@ namespace Labyrinth
     public class PlayerInitialization : IInitialization
     {
         private IPlayerFactory _playerFactory;
-        private Transform _player;
-        
+        private GameObject _player;
+
         public PlayerInitialization(IPlayerFactory playerFactory)
         {
             _playerFactory = playerFactory;
@@ -20,7 +20,12 @@ namespace Labyrinth
 
         public Transform GetPlayer()
         {
-            return _player;
+            return _player.transform;
+        }
+
+        public Renderer GetRenderer()
+        {
+            return _player.GetComponent<Renderer>();
         }
     }
 }

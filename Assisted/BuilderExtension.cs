@@ -17,7 +17,7 @@ namespace Labyrinth
             return gameObject;
         }
 
-        public static GameObject AddTransforn(this GameObject gameObject, Transform transform)
+        public static GameObject AddTransform(this GameObject gameObject, Transform transform)
         {
             gameObject.transform.position = transform.position;
             return gameObject;

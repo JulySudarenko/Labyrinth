@@ -14,8 +14,7 @@ namespace Labyrinth
         protected Renderer _renderer;
         protected Collider _collider;
 
-        [Header("Gizmos")]
-        [SerializeField] private bool _isAllowScaling;
+        [Header("Gizmos")] [SerializeField] private bool _isAllowScaling;
         [SerializeField] private float ActiveDis;
         private bool _isInteractable;
 
@@ -32,21 +31,22 @@ namespace Labyrinth
 
         #endregion
 
+
+        #region UnityMethods
+
         public void Start()
         {
             _collider = GetComponent<Collider>();
             _renderer = GetComponent<Renderer>();
             IsInteractable = true;
-        
+
             _color = Random.ColorHSV();
             if (TryGetComponent(out Renderer renderer))
             {
                 renderer.material.color = _color;
             }
         }
-        
-        #region UnityMethods
-        
+
         private void OnTriggerEnter(Collider other)
         {
             if (!IsInteractable || !other.CompareTag("Player"))

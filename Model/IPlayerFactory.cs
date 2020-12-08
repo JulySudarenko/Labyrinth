@@ -5,6 +5,6 @@ namespace Labyrinth
 {
     public interface IPlayerFactory
     {
-        Transform CreatePlayer();
+        GameObject CreatePlayer();
     }
 }

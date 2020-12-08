@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
+using static UnityEngine.Random;
 
 
 namespace Labyrinth
@@ -10,18 +10,15 @@ namespace Labyrinth
     {
         public Dictionary<string, Action> ColorBonusActions;
 
-        private Color _playerColor;
+        private Renderer _playerRenderer;
         private readonly Color _baseColor;
 
-        private const int INTERVAL = 10;
-
-        public PlayerColorController(PlayerData playerData, Transform player)
+        public PlayerColorController(Renderer playerRenderer)
         {
-            _playerColor = playerData.BallMaterial.color;
-            _baseColor = playerData.BallMaterial.color;
+            _playerRenderer = playerRenderer;
+            _baseColor = playerRenderer.material.color;
 
-
-            ColorBonusActions = new Dictionary<string, Action>
+                ColorBonusActions = new Dictionary<string, Action>
             {
                 ["ChangeColor"] = ChangeColor,
                 ["ReturnBaseColor"] = ReturnBaseColor,
@@ -30,12 +27,12 @@ namespace Labyrinth
 
         public void ReturnBaseColor()
         {
-            _playerColor = _baseColor;
+            _playerRenderer.material.color = _baseColor;
         }
 
         public void ChangeColor()
         {
-            _playerColor = Random.ColorHSV();
+            _playerRenderer.material.color = ColorHSV();
         }
     }
 }

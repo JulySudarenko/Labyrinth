@@ -6,7 +6,6 @@ namespace Labyrinth
     internal sealed class Controllers : IInitialization, IExecute, ICleanup
     {
         private readonly List<IInitialization> _initializeControllers;
-
         private readonly List<IExecute> _executeControllers;
         private readonly List<ICleanup> _cleanupControllers;
 

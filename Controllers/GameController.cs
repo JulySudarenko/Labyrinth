@@ -49,7 +49,8 @@ namespace Labyrinth
             var inputInitialization = new InputInitialization();
             _inputController = new InputController(playerInitialization.GetPlayer(), _interactiveObject,
                 inputInitialization.GetInput());
-            _colorController = new PlayerColorController(_data.Player, playerInitialization.GetPlayer());
+
+            _colorController = new PlayerColorController(playerInitialization.GetRenderer());
             _interactiveObject.ConnectAll(_speedController, _colorController);
 
             _controllers.Add(_viewInitializer);
