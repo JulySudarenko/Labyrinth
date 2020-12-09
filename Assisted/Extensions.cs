@@ -15,7 +15,7 @@ namespace Labyrinth
             coll.Add(self);
             return self;
         }
-
+        
         public static bool TryBool(this string self)
         {
             return Boolean.TryParse(self, out var res) && res;

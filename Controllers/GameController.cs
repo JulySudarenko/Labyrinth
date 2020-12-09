@@ -1,22 +1,22 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 namespace Labyrinth
 {
-    public sealed class GameController : MonoBehaviour, IDisposable
+    public sealed class GameController : MonoBehaviour, ICleanup
     {
         #region Field
 
-        public PlayerType PlayerType = PlayerType.Ball;
-        private ListExecuteObject _executeObject;
+        [SerializeField] private Data _data;
+        private Controllers _controllers;
         private ListInteractiveObject _interactiveObject;
         private ListOfColoringBonuses _coloringBonuses;
         private InteractiveObjectsInitializer _interactiveObjectsInitializer;
         private ViewInitializer _viewInitializer;
         private CameraController _cameraController;
         private InputController _inputController;
-        private PlayerBase _player;
+        private SpeedController _speedController;
+        private PlayerColorController _colorController;
 
         #endregion
 
@@ -25,34 +25,45 @@ namespace Labyrinth
 
         private void Awake()
         {
-            _executeObject = new ListExecuteObject();
             _interactiveObjectsInitializer = new InteractiveObjectsInitializer();
             _interactiveObjectsInitializer.Initialize();
+            _viewInitializer = new ViewInitializer();
+            _speedController = new SpeedController(_data.Player);
+
+            GetComponentInChildren<BonusCreator>().CreateBonus();
+            _coloringBonuses = new ListOfColoringBonuses();
 
             var reference = new Reference();
-
-            _player = null;
-            if (PlayerType == PlayerType.Ball)
-            {
-                _player = reference.PlayerBall;
-            }
-
-            _executeObject.AddExecuteObject(_interactiveObjectsInitializer.ListOfFlyingBonuses);
-            _executeObject.AddExecuteObject(_interactiveObjectsInitializer.ListOfFlickeringBonuses);
-            _executeObject.AddExecuteObject(_interactiveObjectsInitializer.ListOfRotatingBonuses);
-            //_executeObject.AddExecuteObject(_interactiveObjectsInitializer.ListOfColoringBonuses);
+            var playerFactory = new PlayerFactory(_data.Player);
+            var playerInitialization = new PlayerInitialization(playerFactory);
 
             _interactiveObject = new ListInteractiveObject();
 
-            _cameraController = new CameraController(_player.transform, reference.MainCamera.transform);
-            _executeObject.AddExecuteObject(_cameraController);
+            _controllers = new Controllers();
 
-            _inputController = new InputController(_player, _interactiveObject);
-            _executeObject.AddExecuteObject(_inputController);
+            _controllers.Add(_interactiveObjectsInitializer.ListOfFlyingBonuses);
+            _controllers.Add(_interactiveObjectsInitializer.ListOfFlickeringBonuses);
+            _controllers.Add(_interactiveObjectsInitializer.ListOfRotatingBonuses);
+            _controllers.Add(_coloringBonuses);
 
-            _viewInitializer = new ViewInitializer();
-            _viewInitializer.InitializeDisplay();
-            _player.ShowSpeedAction += _viewInitializer.ShowNewSpeed;
+            var inputInitialization = new InputInitialization();
+            _inputController = new InputController(playerInitialization.GetPlayer(), _interactiveObject,
+                inputInitialization.GetInput());
+
+            _colorController = new PlayerColorController(playerInitialization.GetRenderer());
+            _interactiveObject.ConnectAll(_speedController, _colorController);
+
+            _controllers.Add(_viewInitializer);
+            _controllers.Add(inputInitialization);
+            _controllers.Add(playerInitialization);
+
+            _controllers.Add(_inputController);
+            _controllers.Add(new MoveController(inputInitialization.GetInput(), playerInitialization.GetPlayer(),
+                _speedController));
+            _controllers.Add(new CameraController(playerInitialization.GetPlayer(), reference.MainCamera.transform));
+            _controllers.Initialize();
+
+            _speedController.ShowSpeedAction += _viewInitializer.ShowNewSpeed;
             _interactiveObjectsInitializer.HoleBonus.OnCaughtPlayerChange += _viewInitializer.CaughtPlayer;
 
             foreach (var winBonus in _interactiveObjectsInitializer.WinBonuses)
@@ -61,31 +72,17 @@ namespace Labyrinth
                 _viewInitializer.WinBonusRemained++;
             }
 
-            if (Application.platform == RuntimePlatform.WindowsEditor)
-            {
-                _inputController = new InputController(_player, _interactiveObject);
-                _executeObject.AddExecuteObject(_inputController);
-            }
-
-            _viewInitializer.ShowNewSpeed(_player.Speed);
+            _viewInitializer.ShowNewSpeed(_speedController.Speed);
         }
 
-        private void Start()
-        {
-            _coloringBonuses = new ListOfColoringBonuses();
-            _executeObject.AddExecuteObject(_coloringBonuses);
-        }
-        
         private void Update()
         {
-            for (var i = 0; i < _executeObject.Length; i++)
-            {
-                var interactiveObject = _executeObject[i];
-                if (interactiveObject != null)
-                {
-                    interactiveObject.Execute();
-                }
-            }
+            _controllers.Execute();
+        }
+
+        private void OnDestroy()
+        {
+            _controllers.Cleanup();
         }
 
         #endregion
@@ -93,22 +90,15 @@ namespace Labyrinth
 
         #region Methods
 
-        public void Dispose()
+        public void Cleanup()
         {
-            foreach (var o in _executeObject)
+            foreach (var winBonus in _interactiveObjectsInitializer.WinBonuses)
             {
-                if (o is HoleBonus holeBonus)
-                {
-                    holeBonus.OnCaughtPlayerChange -= _viewInitializer.CaughtPlayer;
-                }
-
-                if (o is WinBonus winBonus)
-                {
-                    winBonus.OnPointChange -= _viewInitializer.AddBonus;
-                }
+                winBonus.OnPointChange -= _viewInitializer.AddBonus;
             }
 
-            _player.ShowSpeedAction -= _viewInitializer.ShowNewSpeed;
+            _interactiveObjectsInitializer.HoleBonus.OnCaughtPlayerChange -= _viewInitializer.CaughtPlayer;
+            _speedController.ShowSpeedAction -= _viewInitializer.ShowNewSpeed;
         }
 
         #endregion

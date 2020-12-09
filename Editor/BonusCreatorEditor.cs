@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 namespace Labyrinth
@@ -18,6 +19,7 @@ namespace Labyrinth
             bonusCreator.ColorBonusPrefab =
                 EditorGUILayout.ObjectField("Создаваемый бонус", bonusCreator.ColorBonusPrefab,
                     typeof(GameObject), false) as GameObject;
+
         }
     }
 }

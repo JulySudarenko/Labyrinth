@@ -14,7 +14,7 @@ namespace Labyrinth
 
         public void ChangeColor()
         {
-            _coloringBonus.sharedMaterial.color = UnityEngine.Random.ColorHSV();
+            _coloringBonus.sharedMaterial.color = Random.ColorHSV();
         }
     }
 }

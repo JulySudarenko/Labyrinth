@@ -7,8 +7,7 @@ namespace Labyrinth
     public class ListOfColoringBonuses : IExecute
     {
         private ColorController[] _coloringBonuses;
-
-        //public ListOfColoringBonuses() => _coloringBonuses = new ColorController[] { };
+        
         public ListOfColoringBonuses()
         {
             var bonses = Object.FindObjectsOfType<InteractiveObject>();
@@ -39,14 +38,7 @@ namespace Labyrinth
         {
             foreach (var interactive in interactives)
             {
-                if (_coloringBonuses == null)
-                {
-                    _coloringBonuses = new[] {new ColorController(interactive)};
-                    return;
-                }
-
-                Array.Resize(ref _coloringBonuses, Count + 1);
-                _coloringBonuses[Count - 1] = new ColorController(interactive);
+                AddColoringBonus(interactive);
             }
         }
 

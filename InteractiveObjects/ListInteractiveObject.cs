@@ -14,7 +14,6 @@ namespace Labyrinth
         public ListInteractiveObject()
         {
             _interactiveObjects = Object.FindObjectsOfType<InteractiveObject>();
-            // Array.Sort(_interactiveObjects);
         }
         
         public int Count => _interactiveObjects.Length;
@@ -62,6 +61,14 @@ namespace Labyrinth
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        public void ConnectAll(SpeedController speedController, PlayerColorController colorController)
+        {
+            foreach (var interactive in _interactiveObjects)
+            {
+                interactive.ConnectToPlayerComponents(speedController, colorController);
+            }
         }
     }
 }

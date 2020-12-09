@@ -1,7 +1,10 @@
-﻿namespace Labyrinth
+﻿
+
+namespace Labyrinth
 {
-    public class ListOfBonusDemeanor
+    public interface IListOfBonusDemeanor
     {
-        
+        void AddOneBonus();
+
     }
 }

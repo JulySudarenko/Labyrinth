@@ -1,37 +1,43 @@
 ﻿using UnityEngine;
+using static Labyrinth.AxisManager;
 
 
 namespace Labyrinth
 {
     public sealed class InputController : IExecute
     {
-        private readonly PlayerBase _playerBase;
+        private readonly Transform _player;
         private readonly ListInteractiveObject _interactiveObject;
         private readonly SaveDataRepository _saveDataRepository;
-        private readonly KeyCode _savePlayer = KeyCode.C;
-        private readonly KeyCode _loadPlayer = KeyCode.V;
+        private readonly IUserInputProxy _horizontal;
+        private readonly IUserInputProxy _vertical;
 
-        public InputController(PlayerBase player, ListInteractiveObject interactiveObject)
+
+        public InputController(Transform player, ListInteractiveObject interactiveObject,
+            (IUserInputProxy inputHorizontal, IUserInputProxy inputVertical) input)
         {
-            _playerBase = player;
+            _player = player;
 
             _interactiveObject = interactiveObject;
-            
+
             _saveDataRepository = new SaveDataRepository();
+            _horizontal = input.inputHorizontal;
+            _vertical = input.inputVertical;
         }
-        
+
         public void Execute()
         {
-            _playerBase.Move(Input.GetAxis("Horizontal"), 0.0f, Input.GetAxis("Vertical"));
+            _horizontal.GetAxis();
+            _vertical.GetAxis();
 
-            if (Input.GetKeyDown(_savePlayer))
+            if (Input.GetKeyDown(SAVE))
             {
-                _saveDataRepository.Save(_playerBase, _interactiveObject);
+                _saveDataRepository.Save(_player, _interactiveObject);
             }
 
-            if (Input.GetKeyDown(_loadPlayer))
+            if (Input.GetKeyDown(LOAD))
             {
-                _saveDataRepository.Load(_playerBase, _interactiveObject);
+                _saveDataRepository.Load(_player, _interactiveObject);
             }
         }
     }

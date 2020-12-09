@@ -1,13 +1,13 @@
-﻿
-
-namespace Labyrinth
+﻿namespace Labyrinth
 {
-    public class InteractiveObjectsInitializer
+    public class InteractiveObjectsInitializer : IInitialization
     {
+        #region Fields
+
         private ListOfFlyingBonuses _flyingBonuses;
         private ListOfRotatingBonuses _rotatingBonuses;
         private ListOfFlickeringBonuses _flickeringBonuses;
-        private ListOfColoringBonuses _coloringBonuses;
+
         private HoleBonus _holeBonus;
         private BadSpeedBonus _badSpeedBonus;
         private HighSpeedBonus _highSpeedBonus;
@@ -15,12 +15,19 @@ namespace Labyrinth
 
         public ListOfFlyingBonuses ListOfFlyingBonuses => _flyingBonuses;
         public ListOfRotatingBonuses ListOfRotatingBonuses => _rotatingBonuses;
-        public ListOfFlickeringBonuses ListOfFlickeringBonuses => _flickeringBonuses;
-        public ListOfColoringBonuses ListOfColoringBonuses => _coloringBonuses;
 
-        public HoleBonus HoleBonus => _holeBonus;
+        public ListOfFlickeringBonuses ListOfFlickeringBonuses => _flickeringBonuses;
+
+        public HoleBonus HoleBonus
+        {
+            get => _holeBonus;
+            set => _holeBonus = value;
+        }
 
         public WinBonus[] WinBonuses => _winBonuses;
+
+        #endregion
+
 
         public void Initialize()
         {
@@ -29,7 +36,6 @@ namespace Labyrinth
             _flyingBonuses = new ListOfFlyingBonuses();
             _flickeringBonuses = new ListOfFlickeringBonuses();
             _rotatingBonuses = new ListOfRotatingBonuses();
-            //_coloringBonuses = new ListOfColoringBonuses();
 
             _holeBonus = bonusReference.HoleBonus;
 

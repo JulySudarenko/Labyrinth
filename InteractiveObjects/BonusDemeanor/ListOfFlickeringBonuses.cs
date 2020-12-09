@@ -27,14 +27,7 @@ namespace Labyrinth
         {
             foreach (var interactive in interactives)
             {
-                if (_flickeringBonuses == null)
-                {
-                    _flickeringBonuses = new[] {new FlickerController(interactive)};
-                    return;
-                }
-                
-                Array.Resize(ref _flickeringBonuses, Count + 1);
-                _flickeringBonuses[Count - 1] = new FlickerController(interactive);
+                AddFlickeringBonus(interactive);
             }
         }
         

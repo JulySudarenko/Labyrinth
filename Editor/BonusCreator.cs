@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using UnityEngine.Serialization;
+﻿using System;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 
@@ -8,41 +8,25 @@ namespace Labyrinth
     public class BonusCreator : MonoBehaviour
     {
         public GameObject Bottom;
-        [FormerlySerializedAs("ColorBonus")] public GameObject ColorBonusPrefab;
+        public GameObject ColorBonusPrefab;
         public ColorBonus ColorBonus;
         public string NameObject = "ColorBonus";
         public int Count = 10;
         private Transform _root;
 
-        private void Awake()
+         public void CreateBonus()
         {
-            CreateBonus();
-        }
-
-        private void CreateBonus()
-        {
-            // _root = new GameObject("Root").transform;
-            // for (int i = 1; i <= Count; i++)
-            // {
-            //     Instantiate(ColorBonus, GenerateNewPoint(), Quaternion.identity, _root);
-            // }
-            _root = new GameObject("Root").transform;
+            _root = new GameObject("ColorBonus").transform;
             for (int i = 0; i < Count; i++)
             {
-                // if (!ColorBonus)
-                // {
-                //     ColorBonus = new GameObject().AddComponent<ColorBonus>();
-                // }
-
                 if (ColorBonusPrefab != null & !ColorBonus)
                 {
-                    Instantiate(ColorBonusPrefab, GenerateNewPoint(), 
+                    Instantiate(ColorBonusPrefab, GenerateNewPoint(),
                         Quaternion.identity, _root).AddComponent<ColorBonus>();
-                    
                 }
                 else
                 {
-                    throw new ErrorNews("Не выходит каменный цветок");
+                    throw new ErrorNews("Check the objects on the script.");
                 }
             }
         }
@@ -57,8 +41,8 @@ namespace Labyrinth
 
             for (int i = 0; i < attempt; i++)
             {
-                var checkPoint = new Vector3(Random.Range(pos.x - size.x/2, pos.x + size.x/2),
-                    0.0f, Random.Range(pos.z - size.z/2, pos.z + size.z/2));
+                var checkPoint = new Vector3(Random.Range(pos.x - size.x / 2, pos.x + size.x / 2),
+                    0.0f, Random.Range(pos.z - size.z / 2, pos.z + size.z / 2));
                 var col = new Collider[3];
                 int countColliders = Physics.OverlapSphereNonAlloc(checkPoint, 1.0f, col);
                 Debug.Log($"попытка {i} коллайдеров {countColliders}");
